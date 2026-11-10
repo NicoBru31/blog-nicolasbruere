@@ -1,0 +1,11 @@
+{
+  "name": "Nicolas Bruère",
+  "short_name": "nicolas.bruere",
+  "icons": [
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ],
+  "theme_color": "#1b1916",
+  "background_color": "#faf8f3",
+  "display": "browser"
+}

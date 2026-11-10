@@ -11,6 +11,7 @@
     "preview": "vite preview",
     "deploy": "bun run build && wrangler deploy",
     "gen:highlight-css": "bun scripts/highlight-css.ts",
+    "gen:icons": "bun scripts/icons.ts",
     "lint": "bun lint --no-script --max-warnings 0",
     "lint:fix": "bun lint --no-script --fix",
     "format": "bun fmt --no-script",
@@ -43,6 +44,7 @@
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^6.0.1",
+    "sharp": "0.35.5",
     "typescript": "^6.0.2",
     "vite": "^8.0.0",
     "wrangler": "^4.70.0"
