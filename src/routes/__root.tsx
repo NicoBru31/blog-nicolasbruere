@@ -31,7 +31,8 @@ function RootDocument({ children }: { children: ReactNode }) {
         <HeadContent />
       </head>
       <body className="bg-paper font-sans text-ink antialiased">
-        <div className="mx-auto max-w-3xl px-5 py-8 sm:py-10">
+        {/* Full-height column: <main> grows so the footer sits at the bottom on short pages. */}
+        <div className="mx-auto flex min-h-dvh max-w-3xl flex-col px-5 py-8 sm:py-10">
           <header className="mb-14 flex flex-wrap items-center justify-between gap-3 text-sm">
             <Link to="/" className="font-mono text-[15px] text-heading">
               ~/nicolas<span className="text-accent">.bruere</span>
@@ -51,7 +52,7 @@ function RootDocument({ children }: { children: ReactNode }) {
               <ThemeToggle />
             </nav>
           </header>
-          <main>{children}</main>
+          <main className="flex-1">{children}</main>
           <footer className="mt-24 flex flex-wrap justify-between gap-2 border-t border-line pt-6 font-mono text-xs text-faint">
             <span>© {new Date().getFullYear()} Nicolas Bruère</span>
             <span>// TanStack Start · Redact · Bun</span>
