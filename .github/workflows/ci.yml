@@ -22,6 +22,9 @@ jobs:
           bun-version: canary
 
       - run: bun install --frozen-lockfile
+      # Types for `import … from 'content-collections'` (git-ignored, normally written by the
+      # Vite build): lint and type check need them before the build runs.
+      - run: bun run gen:content
       - run: bun run format:check
       - run: bun run lint # annotates the PR diff automatically on GitHub Actions
       - run: bun run check

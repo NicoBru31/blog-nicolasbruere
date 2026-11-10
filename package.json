@@ -12,13 +12,14 @@
     "deploy": "bun run build && wrangler deploy",
     "gen:highlight-css": "bun scripts/highlight-css.ts",
     "gen:icons": "bun scripts/icons.ts",
+    "gen:content": "content-collections build",
     "lint": "bun lint --no-script --max-warnings 0",
     "lint:fix": "bun lint --no-script --fix",
     "format": "bun fmt --no-script",
     "format:check": "bun fmt --check --no-script",
     "check": "bun check --no-script",
     "test": "bun test",
-    "verify": "bun run format:check && bun run lint && bun run check && bun test && bun run build"
+    "verify": "bun run gen:content && bun run format:check && bun run lint && bun run check && bun test && bun run build"
   },
   "dependencies": {
     "@content-collections/core": "^0.15.3",
@@ -39,6 +40,7 @@
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "^1.26.0",
+    "@content-collections/cli": "0.1.9",
     "@types/bun": "^1.4.4",
     "@types/node": "^22.10.2",
     "@types/react": "^19.2.0",
