@@ -1,6 +1,5 @@
 export const SITE = {
   title: 'Nicolas Bruère',
-  description: 'Blog de dev : React, Rust, Java, CI/CD et Expo.',
-  // TODO: replace with the real domain once Cloudflare is set up.
+  // TODO: replace with the real domain once Cloudflare is set up (used for hreflang links).
   url: 'https://blog-nicolasbruere.example',
 } as const

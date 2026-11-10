@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { useI18n } from '#/lib/i18n'
 import { isoDay } from './PostList'
 
 type ReadingSummary = {
@@ -13,6 +14,7 @@ type ReadingSummary = {
 }
 
 export function ReadingList({ readings }: { readings: ReadingSummary[] }) {
+  const { t, param } = useI18n()
   return (
     <ul className="divide-y divide-line border-y border-line">
       {readings.map((reading) => (
@@ -21,8 +23,8 @@ export function ReadingList({ readings }: { readings: ReadingSummary[] }) {
             <p className="text-heading">
               {reading.hasNotes ? (
                 <Link
-                  to="/lectures/$slug"
-                  params={{ slug: reading.slug }}
+                  to="/{-$locale}/readings/$slug"
+                  params={{ locale: param, slug: reading.slug }}
                   className="font-medium hover:text-accent"
                 >
                   {reading.title}
@@ -40,8 +42,8 @@ export function ReadingList({ readings }: { readings: ReadingSummary[] }) {
           </div>
           <p className="font-mono text-[11px] text-faint">
             {reading.finishedOn
-              ? `fini le ${isoDay(reading.finishedOn)}`
-              : `depuis le ${isoDay(reading.startedOn)}`}
+              ? t.readings.finishedOn(isoDay(reading.finishedOn))
+              : t.readings.since(isoDay(reading.startedOn))}
           </p>
         </li>
       ))}

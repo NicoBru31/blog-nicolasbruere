@@ -1,15 +1,21 @@
 import { defineCollection, defineConfig } from '@content-collections/core'
 import { z } from 'zod'
+import type { Locale } from './src/lib/i18n'
 import { compileMarkdown } from './src/lib/markdown/compile'
 import { highlightCode } from './src/lib/markdown/highlighter'
 import { readingTime, slugFromDirectory } from './src/lib/posts'
 
 export const TAGS = ['react', 'rust', 'java', 'expo', 'ci-cd', 'archi', 'tooling'] as const
 
+// Every entry is a folder holding one file per locale: `en.md` and `fr.md`. Both are required —
+// src/lib/content-files.test.ts fails the build when one is missing or their metadata drifts.
+const LOCALE_FILES = ['*/en.md', '*/fr.md']
+const localeOf = (fileName: string) => fileName.replace(/\.md$/, '') as Locale
+
 const posts = defineCollection({
   name: 'posts',
   directory: 'content/posts',
-  include: '*/index.md',
+  include: LOCALE_FILES,
   schema: z.object({
     title: z.string().max(80),
     description: z.string().max(160),
@@ -24,6 +30,7 @@ const posts = defineCollection({
     const document = compileMarkdown(content, highlightCode)
     return {
       ...data,
+      locale: localeOf(_meta.fileName),
       slug: slugFromDirectory(_meta.directory),
       readingTime: readingTime(content),
       headings: (document.headings ?? []).map(({ id, text, level }) => ({ id, text, level })),
@@ -37,7 +44,7 @@ const posts = defineCollection({
 const readings = defineCollection({
   name: 'readings',
   directory: 'content/readings',
-  include: '*/index.md',
+  include: LOCALE_FILES,
   schema: z.object({
     title: z.string().max(120),
     author: z.string().max(80),
@@ -53,6 +60,7 @@ const readings = defineCollection({
   }),
   transform: ({ content, _meta, ...data }) => ({
     ...data,
+    locale: localeOf(_meta.fileName),
     slug: _meta.directory,
     hasNotes: content.trim().length > 0,
     documentJson: JSON.stringify(compileMarkdown(content, highlightCode)),

@@ -1,17 +1,19 @@
 import { Link } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 import { type CurrentReading as Reading, getCurrentReading } from '#/lib/current-reading'
+import { useI18n } from '#/lib/i18n'
 
 /**
- * "En train de lire" line under the header. Fetched after hydration rather than prerendered,
+ * "Reading now" line under the header. Fetched after hydration rather than prerendered,
  * so it follows the reading app without rebuilding the site. Renders nothing until known.
  */
 export function CurrentReading() {
+  const { locale, t, param } = useI18n()
   const [reading, setReading] = useState<Reading | null>(null)
 
   useEffect(() => {
     let cancelled = false
-    getCurrentReading()
+    getCurrentReading({ data: locale })
       .then((value) => {
         if (!cancelled) setReading(value)
       })
@@ -21,7 +23,7 @@ export function CurrentReading() {
     return () => {
       cancelled = true
     }
-  }, [])
+  }, [locale])
 
   if (!reading) return null
 
@@ -35,11 +37,11 @@ export function CurrentReading() {
   return (
     <p className="-mt-10 mb-10 truncate font-mono text-xs text-faint">
       <span aria-hidden="true">▸ </span>
-      en train de lire :{' '}
+      {t.readingNow}{' '}
       {reading.slug ? (
         <Link
-          to="/lectures/$slug"
-          params={{ slug: reading.slug }}
+          to="/{-$locale}/readings/$slug"
+          params={{ locale: param, slug: reading.slug }}
           className="transition-colors hover:text-accent"
         >
           {label}

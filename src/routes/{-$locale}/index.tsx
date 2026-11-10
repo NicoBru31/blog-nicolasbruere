@@ -1,29 +1,32 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { isoDay, PostList } from '#/components/PostList'
 import { listPosts } from '#/lib/content'
+import { MESSAGES, toLocale, useI18n } from '#/lib/i18n'
 
-export const Route = createFileRoute('/')({
-  loader: () => listPosts(),
+export const Route = createFileRoute('/{-$locale}/')({
+  loader: ({ params }) => listPosts({ data: params.locale }),
+  head: ({ params }) => ({
+    meta: [{ name: 'description', content: MESSAGES[toLocale(params.locale)].siteDescription }],
+  }),
   component: Home,
 })
 
 function Home() {
   const posts = Route.useLoaderData()
+  const { t } = useI18n()
   const latest = posts[0]
 
   return (
     <>
       <section className="mb-10">
         <h1 className="text-2xl font-medium tracking-tight text-heading sm:text-[28px]">
-          Carnet de bord d'un dev full stack
+          {t.home.title}
         </h1>
         <p className="mt-2 font-mono text-xs text-faint">
-          // {posts.length} article{posts.length > 1 ? 's' : ''}
-          {latest && ` · dernier le ${isoDay(latest.pubDate)}`}
+          // {t.home.count(posts.length)}
+          {latest && ` · ${t.home.latest(isoDay(latest.pubDate))}`}
         </p>
-        <p className="mt-4 max-w-xl leading-relaxed text-muted">
-          React, Rust, Java, CI/CD et Expo : ce que j'apprends en construisant, noté au propre.
-        </p>
+        <p className="mt-4 max-w-xl leading-relaxed text-muted">{t.home.intro}</p>
       </section>
       <PostList posts={posts} />
     </>

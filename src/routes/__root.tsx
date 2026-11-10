@@ -1,7 +1,9 @@
-import { createRootRoute, HeadContent, Link, Scripts } from '@tanstack/react-router'
+import { createRootRoute, HeadContent, Link, Scripts, useLocation } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
 import { CurrentReading } from '#/components/CurrentReading'
+import { LanguageSwitch } from '#/components/LanguageSwitch'
 import { ThemeToggle, themeInitScript } from '#/components/ThemeToggle'
+import { LOCALES, localizedPath, useI18n } from '#/lib/i18n'
 import { SITE } from '#/lib/site'
 import appCss from '../styles.css?url'
 
@@ -11,7 +13,6 @@ export const Route = createRootRoute({
       { charSet: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { title: SITE.title },
-      { name: 'description', content: SITE.description },
       { name: 'theme-color', content: '#faf8f3', media: '(prefers-color-scheme: light)' },
       { name: 'theme-color', content: '#1b1916', media: '(prefers-color-scheme: dark)' },
     ],
@@ -25,37 +26,75 @@ const navLink = 'transition-colors hover:text-accent'
 const navActive = { className: 'text-ink' }
 
 function RootDocument({ children }: { children: ReactNode }) {
+  const { t, param } = useI18n()
+  const { pathname } = useLocation()
+
   return (
-    <html lang="fr" suppressHydrationWarning>
+    <html lang={t.htmlLang} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        {/* The same page in each language, for search engines. */}
+        {LOCALES.map((locale) => (
+          <link
+            key={locale}
+            rel="alternate"
+            hrefLang={locale}
+            href={`${SITE.url}${localizedPath(pathname, locale)}`}
+          />
+        ))}
+        <link
+          rel="alternate"
+          hrefLang="x-default"
+          href={`${SITE.url}${localizedPath(pathname, 'en')}`}
+        />
         <HeadContent />
       </head>
       <body className="bg-paper font-sans text-ink antialiased">
         {/* Full-height column: <main> grows so the footer sits at the bottom on short pages. */}
         <div className="mx-auto flex min-h-dvh max-w-3xl flex-col px-5 py-8 sm:py-10">
           <header className="mb-14 flex flex-wrap items-center justify-between gap-3 text-sm">
-            <Link to="/" className="font-mono text-[15px] text-heading">
+            <Link
+              to="/{-$locale}"
+              params={{ locale: param }}
+              className="font-mono text-[15px] text-heading"
+            >
               ~/nicolas<span className="text-accent">.bruere</span>
             </Link>
             <nav className="flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-muted">
               <Link
-                to="/"
+                to="/{-$locale}"
+                params={{ locale: param }}
                 className={navLink}
                 activeProps={navActive}
                 activeOptions={{ exact: true }}
               >
-                /articles
+                {t.nav.articles}
               </Link>
-              <Link to="/lectures" className={navLink} activeProps={navActive}>
-                /lectures
+              <Link
+                to="/{-$locale}/readings"
+                params={{ locale: param }}
+                className={navLink}
+                activeProps={navActive}
+              >
+                {t.nav.readings}
               </Link>
-              <Link to="/tags" className={navLink} activeProps={navActive}>
-                /tags
+              <Link
+                to="/{-$locale}/tags"
+                params={{ locale: param }}
+                className={navLink}
+                activeProps={navActive}
+              >
+                {t.nav.tags}
               </Link>
-              <Link to="/about" className={navLink} activeProps={navActive}>
-                /about
+              <Link
+                to="/{-$locale}/about"
+                params={{ locale: param }}
+                className={navLink}
+                activeProps={navActive}
+              >
+                {t.nav.about}
               </Link>
+              <LanguageSwitch />
               <ThemeToggle />
             </nav>
           </header>
@@ -63,7 +102,7 @@ function RootDocument({ children }: { children: ReactNode }) {
           <main className="flex-1">{children}</main>
           <footer className="mt-24 flex flex-wrap justify-between gap-2 border-t border-line pt-6 font-mono text-xs text-faint">
             <span>© {new Date().getFullYear()} Nicolas Bruère</span>
-            <span>// TanStack Start · Redact · Bun</span>
+            <span>{t.footerStack}</span>
           </footer>
         </div>
         <Scripts />
@@ -73,12 +112,17 @@ function RootDocument({ children }: { children: ReactNode }) {
 }
 
 function NotFound() {
+  const { t, param } = useI18n()
   return (
     <div className="py-10">
-      <p className="font-mono text-sm text-faint">// 404</p>
-      <h1 className="mt-2 text-2xl font-medium text-heading">Page introuvable</h1>
-      <Link to="/" className="mt-6 inline-block font-mono text-sm text-accent hover:underline">
-        cd ~/articles
+      <p className="font-mono text-sm text-faint">{t.notFound.code}</p>
+      <h1 className="mt-2 text-2xl font-medium text-heading">{t.notFound.title}</h1>
+      <Link
+        to="/{-$locale}"
+        params={{ locale: param }}
+        className="mt-6 inline-block font-mono text-sm text-accent hover:underline"
+      >
+        {t.notFound.back}
       </Link>
     </div>
   )

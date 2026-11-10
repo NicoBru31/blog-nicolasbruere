@@ -3,10 +3,11 @@ import { Article } from '#/components/markdown/Article'
 import { isoDay } from '#/components/PostList'
 import { Tag } from '#/components/Tag'
 import { getPost } from '#/lib/content'
+import { useI18n } from '#/lib/i18n'
 import { SITE } from '#/lib/site'
 
-export const Route = createFileRoute('/posts/$slug')({
-  loader: ({ params }) => getPost({ data: params.slug }),
+export const Route = createFileRoute('/{-$locale}/posts/$slug')({
+  loader: ({ params }) => getPost({ data: { slug: params.slug, locale: params.locale } }),
   head: ({ loaderData: post }) => ({
     meta: post
       ? [
@@ -24,11 +25,16 @@ export const Route = createFileRoute('/posts/$slug')({
 
 function PostPage() {
   const post = Route.useLoaderData()
+  const { t, param } = useI18n()
 
   return (
     <article>
-      <Link to="/" className="font-mono text-xs text-faint transition-colors hover:text-accent">
-        ← cd ..
+      <Link
+        to="/{-$locale}"
+        params={{ locale: param }}
+        className="font-mono text-xs text-faint transition-colors hover:text-accent"
+      >
+        {t.post.back}
       </Link>
       <header className="mt-6 mb-10 border-b border-line pb-8">
         <div className="mb-4 flex flex-wrap gap-1.5">
@@ -41,8 +47,8 @@ function PostPage() {
         </h1>
         <p className="mt-3 text-lg leading-relaxed text-muted">{post.description}</p>
         <p className="mt-4 font-mono text-xs text-faint">
-          <time dateTime={isoDay(post.pubDate)}>{isoDay(post.pubDate)}</time> · {post.readingTime}{' '}
-          min de lecture
+          <time dateTime={isoDay(post.pubDate)}>{isoDay(post.pubDate)}</time> ·{' '}
+          {t.post.readTime(post.readingTime)}
         </p>
       </header>
       <Article document={post.document} />

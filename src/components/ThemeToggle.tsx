@@ -1,14 +1,10 @@
 import { useEffect, useState } from 'react'
+import { useI18n } from '#/lib/i18n'
 
 type Preference = 'auto' | 'light' | 'dark'
 
 const STORAGE_KEY = 'theme'
 const OPTIONS: Preference[] = ['auto', 'light', 'dark']
-const LABELS: Record<Preference, string> = {
-  auto: 'Suivre le thème du système',
-  light: 'Thème clair',
-  dark: 'Thème sombre',
-}
 
 /**
  * Inline script for <head>: applies the saved theme (or the OS preference) before first paint,
@@ -33,6 +29,7 @@ function applyPreference(preference: Preference) {
 }
 
 export function ThemeToggle() {
+  const { t } = useI18n()
   // Unknown during prerender: the active option is shown after hydration.
   const [preference, setPreference] = useState<Preference | null>(null)
 
@@ -61,7 +58,7 @@ export function ThemeToggle() {
   }
 
   return (
-    <div role="group" aria-label="Thème" className="flex items-center font-mono text-faint">
+    <div role="group" aria-label={t.theme.group} className="flex items-center font-mono text-faint">
       <span aria-hidden="true">[</span>
       {OPTIONS.map((option, index) => (
         <span key={option} className="flex items-center">
@@ -74,12 +71,12 @@ export function ThemeToggle() {
             type="button"
             onClick={() => choose(option)}
             aria-pressed={preference === option}
-            title={LABELS[option]}
+            title={t.theme.titles[option]}
             className={
               preference === option ? 'text-accent' : 'text-muted transition-colors hover:text-ink'
             }
           >
-            {option}
+            {t.theme.options[option]}
           </button>
         </span>
       ))}

@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { useI18n } from '#/lib/i18n'
 import { Tag } from './Tag'
 
 type PostSummary = {
@@ -14,8 +15,10 @@ type PostSummary = {
 export const isoDay = (date: Date) => new Date(date).toISOString().slice(0, 10)
 
 export function PostList({ posts }: { posts: PostSummary[] }) {
+  const { t, param } = useI18n()
+
   if (posts.length === 0) {
-    return <p className="font-mono text-sm text-faint">// aucun article pour l'instant</p>
+    return <p className="font-mono text-sm text-faint">{t.home.empty}</p>
   }
 
   return (
@@ -33,8 +36,8 @@ export function PostList({ posts }: { posts: PostSummary[] }) {
           <h2 className="text-base leading-snug font-medium text-heading">
             {/* Stretched link: the whole card is clickable, tags stay separate links. */}
             <Link
-              to="/posts/$slug"
-              params={{ slug: post.slug }}
+              to="/{-$locale}/posts/$slug"
+              params={{ locale: param, slug: post.slug }}
               className="after:absolute after:inset-0 after:rounded-lg"
             >
               {post.title}
@@ -42,8 +45,8 @@ export function PostList({ posts }: { posts: PostSummary[] }) {
           </h2>
           <p className="mt-1.5 text-sm leading-relaxed text-muted">{post.description}</p>
           <p className="mt-auto pt-3 font-mono text-[11px] text-faint">
-            <time dateTime={isoDay(post.pubDate)}>{isoDay(post.pubDate)}</time> · {post.readingTime}{' '}
-            min
+            <time dateTime={isoDay(post.pubDate)}>{isoDay(post.pubDate)}</time> ·{' '}
+            {t.post.minutes(post.readingTime)}
           </p>
         </li>
       ))}

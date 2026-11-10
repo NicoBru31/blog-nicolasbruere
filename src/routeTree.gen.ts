@@ -9,180 +9,221 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as AboutRouteImport } from './routes/about'
-import { Route as LecturesIndexRouteImport } from './routes/lectures/index'
-import { Route as LecturesSlugRouteImport } from './routes/lectures/$slug'
-import { Route as PostsSlugRouteImport } from './routes/posts/$slug'
-import { Route as TagsIndexRouteImport } from './routes/tags/index'
-import { Route as TagsTagRouteImport } from './routes/tags/$tag'
+import { Route as Char123LocaleChar125RouteRouteImport } from './routes/{-$locale}/route'
+import { Route as Char123LocaleChar125IndexRouteImport } from './routes/{-$locale}/index'
+import { Route as Char123LocaleChar125AboutRouteImport } from './routes/{-$locale}/about'
+import { Route as Char123LocaleChar125PostsSlugRouteImport } from './routes/{-$locale}/posts/$slug'
+import { Route as Char123LocaleChar125ReadingsIndexRouteImport } from './routes/{-$locale}/readings/index'
+import { Route as Char123LocaleChar125ReadingsSlugRouteImport } from './routes/{-$locale}/readings/$slug'
+import { Route as Char123LocaleChar125TagsIndexRouteImport } from './routes/{-$locale}/tags/index'
+import { Route as Char123LocaleChar125TagsTagRouteImport } from './routes/{-$locale}/tags/$tag'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LecturesIndexRoute = LecturesIndexRouteImport.update({
-  id: '/lectures/',
-  path: '/lectures/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LecturesSlugRoute = LecturesSlugRouteImport.update({
-  id: '/lectures/$slug',
-  path: '/lectures/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PostsSlugRoute = PostsSlugRouteImport.update({
-  id: '/posts/$slug',
-  path: '/posts/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TagsIndexRoute = TagsIndexRouteImport.update({
-  id: '/tags/',
-  path: '/tags/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TagsTagRoute = TagsTagRouteImport.update({
-  id: '/tags/$tag',
-  path: '/tags/$tag',
-  getParentRoute: () => rootRouteImport,
-} as any)
+const Char123LocaleChar125RouteRoute =
+  Char123LocaleChar125RouteRouteImport.update({
+    id: '/{-$locale}',
+    path: '/{-$locale}',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const Char123LocaleChar125IndexRoute =
+  Char123LocaleChar125IndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => Char123LocaleChar125RouteRoute,
+  } as any)
+const Char123LocaleChar125AboutRoute =
+  Char123LocaleChar125AboutRouteImport.update({
+    id: '/about',
+    path: '/about',
+    getParentRoute: () => Char123LocaleChar125RouteRoute,
+  } as any)
+const Char123LocaleChar125PostsSlugRoute =
+  Char123LocaleChar125PostsSlugRouteImport.update({
+    id: '/posts/$slug',
+    path: '/posts/$slug',
+    getParentRoute: () => Char123LocaleChar125RouteRoute,
+  } as any)
+const Char123LocaleChar125ReadingsIndexRoute =
+  Char123LocaleChar125ReadingsIndexRouteImport.update({
+    id: '/readings/',
+    path: '/readings/',
+    getParentRoute: () => Char123LocaleChar125RouteRoute,
+  } as any)
+const Char123LocaleChar125ReadingsSlugRoute =
+  Char123LocaleChar125ReadingsSlugRouteImport.update({
+    id: '/readings/$slug',
+    path: '/readings/$slug',
+    getParentRoute: () => Char123LocaleChar125RouteRoute,
+  } as any)
+const Char123LocaleChar125TagsIndexRoute =
+  Char123LocaleChar125TagsIndexRouteImport.update({
+    id: '/tags/',
+    path: '/tags/',
+    getParentRoute: () => Char123LocaleChar125RouteRoute,
+  } as any)
+const Char123LocaleChar125TagsTagRoute =
+  Char123LocaleChar125TagsTagRouteImport.update({
+    id: '/tags/$tag',
+    path: '/tags/$tag',
+    getParentRoute: () => Char123LocaleChar125RouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/lectures/$slug': typeof LecturesSlugRoute
-  '/posts/$slug': typeof PostsSlugRoute
-  '/tags/$tag': typeof TagsTagRoute
-  '/lectures/': typeof LecturesIndexRoute
-  '/tags/': typeof TagsIndexRoute
+  '/{-$locale}': typeof Char123LocaleChar125RouteRouteWithChildren
+  '/{-$locale}/about': typeof Char123LocaleChar125AboutRoute
+  '/{-$locale}/': typeof Char123LocaleChar125IndexRoute
+  '/{-$locale}/posts/$slug': typeof Char123LocaleChar125PostsSlugRoute
+  '/{-$locale}/readings/$slug': typeof Char123LocaleChar125ReadingsSlugRoute
+  '/{-$locale}/tags/$tag': typeof Char123LocaleChar125TagsTagRoute
+  '/{-$locale}/readings/': typeof Char123LocaleChar125ReadingsIndexRoute
+  '/{-$locale}/tags/': typeof Char123LocaleChar125TagsIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/lectures/$slug': typeof LecturesSlugRoute
-  '/posts/$slug': typeof PostsSlugRoute
-  '/tags/$tag': typeof TagsTagRoute
-  '/lectures': typeof LecturesIndexRoute
-  '/tags': typeof TagsIndexRoute
+  '/{-$locale}/about': typeof Char123LocaleChar125AboutRoute
+  '/{-$locale}': typeof Char123LocaleChar125IndexRoute
+  '/{-$locale}/posts/$slug': typeof Char123LocaleChar125PostsSlugRoute
+  '/{-$locale}/readings/$slug': typeof Char123LocaleChar125ReadingsSlugRoute
+  '/{-$locale}/tags/$tag': typeof Char123LocaleChar125TagsTagRoute
+  '/{-$locale}/readings': typeof Char123LocaleChar125ReadingsIndexRoute
+  '/{-$locale}/tags': typeof Char123LocaleChar125TagsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/lectures/$slug': typeof LecturesSlugRoute
-  '/posts/$slug': typeof PostsSlugRoute
-  '/tags/$tag': typeof TagsTagRoute
-  '/lectures/': typeof LecturesIndexRoute
-  '/tags/': typeof TagsIndexRoute
+  '/{-$locale}': typeof Char123LocaleChar125RouteRouteWithChildren
+  '/{-$locale}/about': typeof Char123LocaleChar125AboutRoute
+  '/{-$locale}/': typeof Char123LocaleChar125IndexRoute
+  '/{-$locale}/posts/$slug': typeof Char123LocaleChar125PostsSlugRoute
+  '/{-$locale}/readings/$slug': typeof Char123LocaleChar125ReadingsSlugRoute
+  '/{-$locale}/tags/$tag': typeof Char123LocaleChar125TagsTagRoute
+  '/{-$locale}/readings/': typeof Char123LocaleChar125ReadingsIndexRoute
+  '/{-$locale}/tags/': typeof Char123LocaleChar125TagsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
-    | '/about'
-    | '/lectures/$slug'
-    | '/posts/$slug'
-    | '/tags/$tag'
-    | '/lectures/'
-    | '/tags/'
+    | '/{-$locale}'
+    | '/{-$locale}/about'
+    | '/{-$locale}/'
+    | '/{-$locale}/posts/$slug'
+    | '/{-$locale}/readings/$slug'
+    | '/{-$locale}/tags/$tag'
+    | '/{-$locale}/readings/'
+    | '/{-$locale}/tags/'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
-    | '/about'
-    | '/lectures/$slug'
-    | '/posts/$slug'
-    | '/tags/$tag'
-    | '/lectures'
-    | '/tags'
+    | '/{-$locale}/about'
+    | '/{-$locale}'
+    | '/{-$locale}/posts/$slug'
+    | '/{-$locale}/readings/$slug'
+    | '/{-$locale}/tags/$tag'
+    | '/{-$locale}/readings'
+    | '/{-$locale}/tags'
   id:
     | '__root__'
-    | '/'
-    | '/about'
-    | '/lectures/$slug'
-    | '/posts/$slug'
-    | '/tags/$tag'
-    | '/lectures/'
-    | '/tags/'
+    | '/{-$locale}'
+    | '/{-$locale}/about'
+    | '/{-$locale}/'
+    | '/{-$locale}/posts/$slug'
+    | '/{-$locale}/readings/$slug'
+    | '/{-$locale}/tags/$tag'
+    | '/{-$locale}/readings/'
+    | '/{-$locale}/tags/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
-  LecturesSlugRoute: typeof LecturesSlugRoute
-  PostsSlugRoute: typeof PostsSlugRoute
-  TagsTagRoute: typeof TagsTagRoute
-  LecturesIndexRoute: typeof LecturesIndexRoute
-  TagsIndexRoute: typeof TagsIndexRoute
+  Char123LocaleChar125RouteRoute: typeof Char123LocaleChar125RouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/{-$locale}': {
+      id: '/{-$locale}'
+      path: '/{-$locale}'
+      fullPath: '/{-$locale}'
+      preLoaderRoute: typeof Char123LocaleChar125RouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/{-$locale}/': {
+      id: '/{-$locale}/'
       path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      fullPath: '/{-$locale}/'
+      preLoaderRoute: typeof Char123LocaleChar125IndexRouteImport
+      parentRoute: typeof Char123LocaleChar125RouteRoute
     }
-    '/about': {
-      id: '/about'
+    '/{-$locale}/about': {
+      id: '/{-$locale}/about'
       path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
+      fullPath: '/{-$locale}/about'
+      preLoaderRoute: typeof Char123LocaleChar125AboutRouteImport
+      parentRoute: typeof Char123LocaleChar125RouteRoute
     }
-    '/lectures/': {
-      id: '/lectures/'
-      path: '/lectures'
-      fullPath: '/lectures/'
-      preLoaderRoute: typeof LecturesIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/lectures/$slug': {
-      id: '/lectures/$slug'
-      path: '/lectures/$slug'
-      fullPath: '/lectures/$slug'
-      preLoaderRoute: typeof LecturesSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/posts/$slug': {
-      id: '/posts/$slug'
+    '/{-$locale}/posts/$slug': {
+      id: '/{-$locale}/posts/$slug'
       path: '/posts/$slug'
-      fullPath: '/posts/$slug'
-      preLoaderRoute: typeof PostsSlugRouteImport
-      parentRoute: typeof rootRouteImport
+      fullPath: '/{-$locale}/posts/$slug'
+      preLoaderRoute: typeof Char123LocaleChar125PostsSlugRouteImport
+      parentRoute: typeof Char123LocaleChar125RouteRoute
     }
-    '/tags/': {
-      id: '/tags/'
+    '/{-$locale}/readings/': {
+      id: '/{-$locale}/readings/'
+      path: '/readings'
+      fullPath: '/{-$locale}/readings/'
+      preLoaderRoute: typeof Char123LocaleChar125ReadingsIndexRouteImport
+      parentRoute: typeof Char123LocaleChar125RouteRoute
+    }
+    '/{-$locale}/readings/$slug': {
+      id: '/{-$locale}/readings/$slug'
+      path: '/readings/$slug'
+      fullPath: '/{-$locale}/readings/$slug'
+      preLoaderRoute: typeof Char123LocaleChar125ReadingsSlugRouteImport
+      parentRoute: typeof Char123LocaleChar125RouteRoute
+    }
+    '/{-$locale}/tags/': {
+      id: '/{-$locale}/tags/'
       path: '/tags'
-      fullPath: '/tags/'
-      preLoaderRoute: typeof TagsIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      fullPath: '/{-$locale}/tags/'
+      preLoaderRoute: typeof Char123LocaleChar125TagsIndexRouteImport
+      parentRoute: typeof Char123LocaleChar125RouteRoute
     }
-    '/tags/$tag': {
-      id: '/tags/$tag'
+    '/{-$locale}/tags/$tag': {
+      id: '/{-$locale}/tags/$tag'
       path: '/tags/$tag'
-      fullPath: '/tags/$tag'
-      preLoaderRoute: typeof TagsTagRouteImport
-      parentRoute: typeof rootRouteImport
+      fullPath: '/{-$locale}/tags/$tag'
+      preLoaderRoute: typeof Char123LocaleChar125TagsTagRouteImport
+      parentRoute: typeof Char123LocaleChar125RouteRoute
     }
   }
 }
 
+interface Char123LocaleChar125RouteRouteChildren {
+  Char123LocaleChar125AboutRoute: typeof Char123LocaleChar125AboutRoute
+  Char123LocaleChar125IndexRoute: typeof Char123LocaleChar125IndexRoute
+  Char123LocaleChar125PostsSlugRoute: typeof Char123LocaleChar125PostsSlugRoute
+  Char123LocaleChar125ReadingsSlugRoute: typeof Char123LocaleChar125ReadingsSlugRoute
+  Char123LocaleChar125TagsTagRoute: typeof Char123LocaleChar125TagsTagRoute
+  Char123LocaleChar125ReadingsIndexRoute: typeof Char123LocaleChar125ReadingsIndexRoute
+  Char123LocaleChar125TagsIndexRoute: typeof Char123LocaleChar125TagsIndexRoute
+}
+
+const Char123LocaleChar125RouteRouteChildren: Char123LocaleChar125RouteRouteChildren =
+  {
+    Char123LocaleChar125AboutRoute: Char123LocaleChar125AboutRoute,
+    Char123LocaleChar125IndexRoute: Char123LocaleChar125IndexRoute,
+    Char123LocaleChar125PostsSlugRoute: Char123LocaleChar125PostsSlugRoute,
+    Char123LocaleChar125ReadingsSlugRoute:
+      Char123LocaleChar125ReadingsSlugRoute,
+    Char123LocaleChar125TagsTagRoute: Char123LocaleChar125TagsTagRoute,
+    Char123LocaleChar125ReadingsIndexRoute:
+      Char123LocaleChar125ReadingsIndexRoute,
+    Char123LocaleChar125TagsIndexRoute: Char123LocaleChar125TagsIndexRoute,
+  }
+
+const Char123LocaleChar125RouteRouteWithChildren =
+  Char123LocaleChar125RouteRoute._addFileChildren(
+    Char123LocaleChar125RouteRouteChildren,
+  )
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
-  LecturesSlugRoute: LecturesSlugRoute,
-  PostsSlugRoute: PostsSlugRoute,
-  TagsTagRoute: TagsTagRoute,
-  LecturesIndexRoute: LecturesIndexRoute,
-  TagsIndexRoute: TagsIndexRoute,
+  Char123LocaleChar125RouteRoute: Char123LocaleChar125RouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -26,9 +26,13 @@ bun run dev        # http://localhost:3000
 | `bun run preview`           | sert le build avec le runtime Cloudflare local             |
 | `bun run gen:highlight-css` | régénère `src/highlight.css` après un changement de thème  |
 
+## Langues
+
+Anglais à la racine (`/about`), français sous `/fr/` (`/fr/about`) : une seule arborescence de routes sous `src/routes/{-$locale}/`. Les textes de l'interface sont dans `src/lib/i18n.ts` (un test vérifie que `en` et `fr` ont les mêmes clés). `/en/…` renvoie une 404.
+
 ## Écrire un article
 
-Créer `content/posts/AAAA-MM-slug/index.md` (le préfixe de date ne sert qu'au tri des dossiers ; l'URL est `/posts/slug`) :
+Chaque article est un dossier `content/posts/AAAA-MM-slug/` avec **deux fichiers obligatoires**, `en.md` et `fr.md` (le préfixe de date ne sert qu'au tri ; les URL sont `/posts/slug` et `/fr/posts/slug`). `bun test` échoue si l'un manque ou si les métadonnées partagées (`pubDate`, `tags`, `draft`…) diffèrent entre les deux. Même principe pour les fiches de lecture dans `content/readings/<slug>/`.
 
 ```md
 ---
