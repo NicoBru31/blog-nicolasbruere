@@ -19,7 +19,8 @@
     "format:check": "bun fmt --check --no-script",
     "check": "bun check --no-script",
     "test": "bun test",
-    "verify": "bun run gen:content && bun run format:check && bun run lint && bun run check && bun test && bun run build"
+    "verify": "bun run gen:content && bun run format:check && bun run lint && bun run check && bun run knip && bun test && bun run build",
+    "knip": "knip"
   },
   "dependencies": {
     "@content-collections/core": "^0.15.3",
@@ -46,6 +47,8 @@
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^6.0.1",
+    "knip": "6.45.0",
+    "oxc-transform-react": "0.158.0",
     "sharp": "0.35.5",
     "typescript": "^6.0.2",
     "vite": "^8.0.0",

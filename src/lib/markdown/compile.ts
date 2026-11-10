@@ -12,9 +12,9 @@ import { parseMarkdown } from '@tanstack/markdown/parser'
 /** Tag emitted for pre-highlighted code blocks; mapped to <CodeBlock> by the React renderer. */
 export const CODE_BLOCK_TAG = 'blog-code'
 /** Prefix for comment components (`<!-- ::counter -->` → `blog-counter`). */
-export const COMPONENT_TAG_PREFIX = 'blog-'
+const COMPONENT_TAG_PREFIX = 'blog-'
 
-export const markdownExtensions = [
+const markdownExtensions = [
   calloutsExtension(),
   commentComponentsExtension({
     // The React renderer passes `properties` (not `attributes`) as props.

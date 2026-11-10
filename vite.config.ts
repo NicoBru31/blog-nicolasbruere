@@ -17,7 +17,7 @@ export default defineConfig({
     tanstackStart({
       prerender: { enabled: true, crawlLinks: true, failOnError: true },
     }),
-    viteReact(),
+    viteReact({ compiler: true }),
     redact(),
   ],
 })

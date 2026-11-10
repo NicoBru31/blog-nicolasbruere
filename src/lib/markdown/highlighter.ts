@@ -17,7 +17,7 @@ import { tsx } from '@tanstack/highlight/languages/tsx'
 import { yaml } from '@tanstack/highlight/languages/yaml'
 import { createTanStackMarkdownHighlighter } from '@tanstack/highlight/markdown'
 
-export const highlighter = createHighlighter({
+const highlighter = createHighlighter({
   languages: [css, diff, dockerfile, html, java, js, json, jsx, rust, shell, toml, ts, tsx, yaml],
 })
 
