@@ -104,7 +104,7 @@ function CommitBody({ commit, last }: { commit: Commit; last: boolean }) {
           <summary className="cursor-pointer list-none [&::-webkit-details-marker]:hidden">
             {header}
             <span className="mt-1 inline-block font-mono text-[11px] text-faint group-open:hidden hover:text-accent">
-              git show ▸
+              show ▸
             </span>
           </summary>
           <ul className="mt-2 space-y-1.5 border-l border-line pl-3 text-sm leading-relaxed text-muted">

@@ -54,13 +54,9 @@ function AboutPage() {
 
       <section>
         <h2 className="mb-1 text-lg font-medium text-heading">Hors du code</h2>
-        <p className="mb-6 font-mono text-xs text-faint">// ce qui ne tient pas dans un commit</p>
+        <p className="mb-6 font-mono text-xs text-faint">// mes sources de bonheur au quotidien</p>
         <dl className="grid gap-x-6 gap-y-4 sm:grid-cols-[110px_minmax(0,1fr)]">
           <Hobby term="famille">Papa de trois enfants.</Hobby>
-          <Hobby term="rugby">
-            Deuxième ligne, et supporter du <span className="text-heading">Stade Toulousain</span>.
-          </Hobby>
-          <Hobby term="basket">Aussi, pour changer de ballon.</Hobby>
           <Hobby term="lecture">
             Je lis beaucoup, de Balzac à Jaworski.{' '}
             <Link to="/lectures" className="text-accent underline-offset-3 hover:underline">
@@ -68,6 +64,10 @@ function AboutPage() {
             </Link>
             .
           </Hobby>
+          <Hobby term="rugby">
+            Deuxième ligne, et supporter du <span className="text-heading">Stade Toulousain</span>.
+          </Hobby>
+          <Hobby term="basket">Aussi, pour changer de ballon.</Hobby>
         </dl>
       </section>
     </>
