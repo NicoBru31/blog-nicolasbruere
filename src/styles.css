@@ -1,36 +1,174 @@
 @import 'tailwindcss';
 @plugin "@tailwindcss/typography";
+@import '@fontsource/ibm-plex-sans/latin-400.css';
+@import '@fontsource/ibm-plex-sans/latin-400-italic.css';
+@import '@fontsource/ibm-plex-sans/latin-500.css';
+@import '@fontsource/jetbrains-mono/latin-400.css';
+@import '@fontsource/jetbrains-mono/latin-500.css';
 @import './highlight.css';
 
 /* Class-based dark mode, shared with the highlight theme (.dark .markdown-renderer). */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* ── Theme "carnet technique": paper (light) / ink (dark) ─────────────────────── */
+:root {
+  --paper: #faf8f3;
+  --surface: #ffffff;
+  --line: #e7e2d6;
+  --ink: #24221d;
+  --heading: #1c1a16;
+  --muted: #6f6a5e;
+  --faint: #756f62;
+  --accent: #c2410c;
+  --code-bg: #ffffff;
+  --mark: #fde68a;
+
+  /* One color per techno: [background, text] */
+  --tag-react: #e0f2fe;
+  --tag-react-ink: #075985;
+  --tag-rust: #ffedd5;
+  --tag-rust-ink: #9a3412;
+  --tag-java: #fee2e2;
+  --tag-java-ink: #991b1b;
+  --tag-expo: #ede9fe;
+  --tag-expo-ink: #5b21b6;
+  --tag-ci-cd: #dcfce7;
+  --tag-ci-cd-ink: #166534;
+  --tag-archi: #fef9c3;
+  --tag-archi-ink: #854d0e;
+  --tag-tooling: #e7e5e4;
+  --tag-tooling-ink: #44403c;
+}
+
+.dark {
+  color-scheme: dark;
+  --paper: #1b1916;
+  --surface: #24211d;
+  --line: #363129;
+  --ink: #ece6d8;
+  --heading: #f3eee3;
+  --muted: #a39c8c;
+  --faint: #8f887a;
+  --accent: #fb923c;
+  --code-bg: #151310;
+  --mark: #5c4a1a;
+
+  --tag-react: #0c3a4f;
+  --tag-react-ink: #7dd3fc;
+  --tag-rust: #4a2512;
+  --tag-rust-ink: #fdba74;
+  --tag-java: #4c1717;
+  --tag-java-ink: #fca5a5;
+  --tag-expo: #2e1f52;
+  --tag-expo-ink: #c4b5fd;
+  --tag-ci-cd: #14361f;
+  --tag-ci-cd-ink: #86efac;
+  --tag-archi: #3d3410;
+  --tag-archi-ink: #fde047;
+  --tag-tooling: #33302b;
+  --tag-tooling-ink: #d6d3d1;
+}
+
+@theme inline {
+  --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-heading: var(--heading);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-accent: var(--accent);
+}
+
+html {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+::selection {
+  background: var(--mark);
+}
+
+/* ── Prose: map typography plugin colors to the theme tokens ──────────────────── */
+.markdown-renderer {
+  --tw-prose-body: var(--ink);
+  --tw-prose-headings: var(--heading);
+  --tw-prose-lead: var(--muted);
+  --tw-prose-links: var(--accent);
+  --tw-prose-bold: var(--heading);
+  --tw-prose-counters: var(--muted);
+  --tw-prose-bullets: var(--faint);
+  --tw-prose-hr: var(--line);
+  --tw-prose-quotes: var(--ink);
+  --tw-prose-quote-borders: var(--line);
+  --tw-prose-captions: var(--muted);
+  --tw-prose-code: var(--heading);
+  --tw-prose-th-borders: var(--line);
+  --tw-prose-td-borders: var(--line);
+}
+
+/* Code blocks sit on the theme's code surface, not on the highlight theme's own background.
+   Same specificity as the generated `.dark .markdown-renderer` rule, declared after it. */
+.markdown-renderer,
+.dark .markdown-renderer {
+  --th-background: var(--code-bg);
+}
+
+.markdown-renderer :where(a) {
+  text-underline-offset: 3px;
+}
+
+.markdown-renderer :where(:not(pre) > code) {
+  padding: 0.1em 0.35em;
+  font-weight: 400;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+.markdown-renderer :where(:not(pre) > code)::before,
+.markdown-renderer :where(:not(pre) > code)::after {
+  content: none;
+}
+
+/* ── Code blocks ──────────────────────────────────────────────────────────────── */
 .code-block {
-  margin: 1.5rem 0;
+  margin: 1.75rem 0;
   overflow: hidden;
-  border: 1px solid color-mix(in srgb, currentColor 15%, transparent);
-  border-radius: 0.5rem;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
 }
 
 .code-block__header {
   display: flex;
   justify-content: space-between;
-  padding: 0.375rem 0.75rem;
+  align-items: center;
+  padding: 0.4rem 0.875rem;
+  font-family: var(--font-mono);
   font-size: 0.75rem;
-  opacity: 0.75;
-  border-bottom: 1px solid color-mix(in srgb, currentColor 15%, transparent);
+  color: var(--faint);
+  border-bottom: 1px solid var(--line);
+}
+
+.code-block__copy {
+  color: var(--faint);
 }
 
 .code-block__copy:hover {
-  text-decoration: underline;
+  color: var(--accent);
 }
 
 .code-block pre {
   margin: 0;
-  padding: 1rem;
+  padding: 0.875rem 1rem;
   overflow-x: auto;
-  font-size: 0.875rem;
-  line-height: 1.6;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  background: var(--code-bg);
 }
 
 /* Lines are already separated by "\n" inside <pre>: a block display would double them. */
@@ -38,19 +176,40 @@
   display: inline-block;
   min-width: calc(100% + 2rem);
   margin: 0 -1rem;
-  padding: 0 1rem;
-  background: color-mix(in srgb, currentColor 10%, transparent);
+  padding: 0 calc(1rem - 3px);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  border-left: 3px solid var(--accent);
 }
 
+/* ── Callouts (> [!TIP]) ──────────────────────────────────────────────────────── */
 .markdown-alert {
-  margin: 1.5rem 0;
+  margin: 1.75rem 0;
   padding: 0.75rem 1rem;
-  border-left: 4px solid color-mix(in srgb, currentColor 40%, transparent);
-  border-radius: 0.25rem;
-  background: color-mix(in srgb, currentColor 5%, transparent);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 6px 6px 0;
+}
+
+.markdown-alert-warning,
+.markdown-alert-caution {
+  border-left-color: var(--tag-java-ink);
+}
+
+.markdown-alert-note,
+.markdown-alert-important {
+  border-left-color: var(--tag-react-ink);
 }
 
 .markdown-alert-title {
-  margin: 0 !important;
-  font-weight: 600;
+  margin: 0 0 0.25rem !important;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--muted);
+  text-transform: lowercase;
+}
+
+.markdown-alert-content > :last-child {
+  margin-bottom: 0;
 }

@@ -1,9 +1,9 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { Article } from '#/components/markdown/Article'
+import { isoDay } from '#/components/PostList'
+import { Tag } from '#/components/Tag'
 import { getPost } from '#/lib/content'
 import { SITE } from '#/lib/site'
-
-const dateFormat = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long' })
 
 export const Route = createFileRoute('/posts/$slug')({
   loader: ({ params }) => getPost({ data: params.slug }),
@@ -15,7 +15,7 @@ export const Route = createFileRoute('/posts/$slug')({
           { property: 'og:type', content: 'article' },
           { property: 'og:title', content: post.title },
           { property: 'og:description', content: post.description },
-          { property: 'article:published_time', content: new Date(post.pubDate).toISOString() },
+          { property: 'article:published_time', content: isoDay(post.pubDate) },
         ]
       : [],
   }),
@@ -27,18 +27,22 @@ function PostPage() {
 
   return (
     <article>
-      <header className="mb-10">
-        <h1 className="text-4xl font-bold tracking-tight">{post.title}</h1>
-        <p className="mt-3 flex flex-wrap gap-x-3 text-sm text-zinc-500">
-          <time dateTime={new Date(post.pubDate).toISOString()}>
-            {dateFormat.format(new Date(post.pubDate))}
-          </time>
-          <span>{post.readingTime} min de lecture</span>
+      <Link to="/" className="font-mono text-xs text-faint transition-colors hover:text-accent">
+        ← cd ..
+      </Link>
+      <header className="mt-6 mb-10 border-b border-line pb-8">
+        <div className="mb-4 flex flex-wrap gap-1.5">
           {post.tags.map((tag) => (
-            <Link key={tag} to="/tags/$tag" params={{ tag }} className="hover:underline">
-              #{tag}
-            </Link>
+            <Tag key={tag} name={tag} />
           ))}
+        </div>
+        <h1 className="text-3xl leading-tight font-medium tracking-tight text-heading sm:text-4xl">
+          {post.title}
+        </h1>
+        <p className="mt-3 text-lg leading-relaxed text-muted">{post.description}</p>
+        <p className="mt-4 font-mono text-xs text-faint">
+          <time dateTime={isoDay(post.pubDate)}>{isoDay(post.pubDate)}</time> · {post.readingTime}{' '}
+          min de lecture
         </p>
       </header>
       <Article document={post.document} />

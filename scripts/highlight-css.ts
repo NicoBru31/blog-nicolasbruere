@@ -1,12 +1,13 @@
 // Generates the syntax-highlighting theme CSS once, so theme objects never ship to the client.
 // Run: bun run gen:highlight-css
 import { createThemeCss } from '@tanstack/highlight/theme'
-import { githubDarkTheme } from '@tanstack/highlight/themes/github-dark'
-import { githubLightTheme } from '@tanstack/highlight/themes/github-light'
+import { gruvboxDarkTheme } from '@tanstack/highlight/themes/gruvbox-dark'
+import { gruvboxLightTheme } from '@tanstack/highlight/themes/gruvbox-light'
 
+// Warm palettes to match the paper (light) / ink (dark) site theme.
 const css = createThemeCss({
-  light: githubLightTheme,
-  dark: githubDarkTheme,
+  light: gruvboxLightTheme,
+  dark: gruvboxDarkTheme,
   lightSelector: '.markdown-renderer',
   darkSelector: '.dark .markdown-renderer',
   codeBlockSelector: '.markdown-renderer pre.tm-code',

@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { Tag } from './Tag'
 
 type PostSummary = {
   slug: string
@@ -6,32 +7,43 @@ type PostSummary = {
   description: string
   pubDate: Date
   readingTime: number
-  tags: string[]
+  tags: readonly string[]
 }
 
-const dateFormat = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long' })
+/** ISO day (2026-11-10): reads well in mono and never depends on the viewer's locale. */
+export const isoDay = (date: Date) => new Date(date).toISOString().slice(0, 10)
 
 export function PostList({ posts }: { posts: PostSummary[] }) {
-  if (posts.length === 0) return <p className="text-zinc-500">Aucun article pour l'instant.</p>
+  if (posts.length === 0) {
+    return <p className="font-mono text-sm text-faint">// aucun article pour l'instant</p>
+  }
 
   return (
-    <ul className="space-y-8">
+    <ul className="grid gap-3 sm:grid-cols-2">
       {posts.map((post) => (
-        <li key={post.slug}>
-          <Link to="/posts/$slug" params={{ slug: post.slug }} className="group block">
-            <h2 className="text-xl font-semibold group-hover:underline">{post.title}</h2>
-            <p className="mt-1 text-zinc-600 dark:text-zinc-400">{post.description}</p>
-          </Link>
-          <p className="mt-2 flex flex-wrap gap-x-3 text-sm text-zinc-500">
-            <time dateTime={new Date(post.pubDate).toISOString()}>
-              {dateFormat.format(new Date(post.pubDate))}
-            </time>
-            <span>{post.readingTime} min</span>
+        <li
+          key={post.slug}
+          className="group relative flex flex-col rounded-lg border border-line bg-surface p-4 transition-colors hover:border-accent"
+        >
+          <div className="relative z-10 mb-2.5 flex flex-wrap gap-1.5">
             {post.tags.map((tag) => (
-              <Link key={tag} to="/tags/$tag" params={{ tag }} className="hover:underline">
-                #{tag}
-              </Link>
+              <Tag key={tag} name={tag} />
             ))}
+          </div>
+          <h2 className="text-base leading-snug font-medium text-heading">
+            {/* Stretched link: the whole card is clickable, tags stay separate links. */}
+            <Link
+              to="/posts/$slug"
+              params={{ slug: post.slug }}
+              className="after:absolute after:inset-0 after:rounded-lg"
+            >
+              {post.title}
+            </Link>
+          </h2>
+          <p className="mt-1.5 text-sm leading-relaxed text-muted">{post.description}</p>
+          <p className="mt-auto pt-3 font-mono text-[11px] text-faint">
+            <time dateTime={isoDay(post.pubDate)}>{isoDay(post.pubDate)}</time> · {post.readingTime}{' '}
+            min
           </p>
         </li>
       ))}

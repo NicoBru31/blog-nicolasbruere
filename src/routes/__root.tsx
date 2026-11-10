@@ -1,10 +1,8 @@
 import { createRootRoute, HeadContent, Link, Scripts } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
+import { ThemeToggle, themeInitScript } from '#/components/ThemeToggle'
 import { SITE } from '#/lib/site'
 import appCss from '../styles.css?url'
-
-// Applies the OS color scheme before first paint (avoids a light flash in dark mode).
-const themeScript = `document.documentElement.classList.toggle('dark', matchMedia('(prefers-color-scheme: dark)').matches)`
 
 export const Route = createRootRoute({
   head: () => ({
@@ -13,35 +11,66 @@ export const Route = createRootRoute({
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { title: SITE.title },
       { name: 'description', content: SITE.description },
+      { name: 'theme-color', content: '#faf8f3', media: '(prefers-color-scheme: light)' },
+      { name: 'theme-color', content: '#1b1916', media: '(prefers-color-scheme: dark)' },
     ],
     links: [{ rel: 'stylesheet', href: appCss }],
   }),
   shellComponent: RootDocument,
-  notFoundComponent: () => <p>Page introuvable.</p>,
+  notFoundComponent: NotFound,
 })
+
+const navLink = 'transition-colors hover:text-accent'
+const navActive = { className: 'text-ink' }
 
 function RootDocument({ children }: { children: ReactNode }) {
   return (
     <html lang="fr" suppressHydrationWarning>
       <head>
-        {/* biome-ignore lint/security/noDangerouslySetInnerHtml: static, author-controlled script */}
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <HeadContent />
       </head>
-      <body className="bg-white text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100">
-        <div className="mx-auto max-w-3xl px-4 py-10">
-          <header className="mb-14 flex items-center justify-between">
-            <Link to="/" className="font-semibold">
-              {SITE.title}
+      <body className="bg-paper font-sans text-ink antialiased">
+        <div className="mx-auto max-w-3xl px-5 py-8 sm:py-10">
+          <header className="mb-14 flex flex-wrap items-center justify-between gap-3 text-sm">
+            <Link to="/" className="font-mono text-[15px] text-heading">
+              ~/nicolas<span className="text-accent">.bruere</span>
             </Link>
+            <nav className="flex items-center gap-4 font-mono text-muted">
+              <Link
+                to="/"
+                className={navLink}
+                activeProps={navActive}
+                activeOptions={{ exact: true }}
+              >
+                /articles
+              </Link>
+              <Link to="/tags" className={navLink} activeProps={navActive}>
+                /tags
+              </Link>
+              <ThemeToggle />
+            </nav>
           </header>
           <main>{children}</main>
-          <footer className="mt-20 border-t border-zinc-200 pt-6 text-sm text-zinc-500 dark:border-zinc-800">
-            Prérendu avec TanStack Start · runtime Redact
+          <footer className="mt-24 flex flex-wrap justify-between gap-2 border-t border-line pt-6 font-mono text-xs text-faint">
+            <span>© {new Date().getFullYear()} Nicolas Bruère</span>
+            <span>// TanStack Start · Redact · Bun</span>
           </footer>
         </div>
         <Scripts />
       </body>
     </html>
+  )
+}
+
+function NotFound() {
+  return (
+    <div className="py-10">
+      <p className="font-mono text-sm text-faint">// 404</p>
+      <h1 className="mt-2 text-2xl font-medium text-heading">Page introuvable</h1>
+      <Link to="/" className="mt-6 inline-block font-mono text-sm text-accent hover:underline">
+        cd ~/articles
+      </Link>
+    </div>
   )
 }

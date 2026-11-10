@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PostsSlugRouteImport } from './routes/posts/$slug'
+import { Route as TagsIndexRouteImport } from './routes/tags/index'
 import { Route as TagsTagRouteImport } from './routes/tags/$tag'
 
 const IndexRoute = IndexRouteImport.update({
@@ -23,6 +24,11 @@ const PostsSlugRoute = PostsSlugRouteImport.update({
   path: '/posts/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TagsIndexRoute = TagsIndexRouteImport.update({
+  id: '/tags/',
+  path: '/tags/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TagsTagRoute = TagsTagRouteImport.update({
   id: '/tags/$tag',
   path: '/tags/$tag',
@@ -33,30 +39,34 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/posts/$slug': typeof PostsSlugRoute
   '/tags/$tag': typeof TagsTagRoute
+  '/tags/': typeof TagsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/posts/$slug': typeof PostsSlugRoute
   '/tags/$tag': typeof TagsTagRoute
+  '/tags': typeof TagsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/posts/$slug': typeof PostsSlugRoute
   '/tags/$tag': typeof TagsTagRoute
+  '/tags/': typeof TagsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/posts/$slug' | '/tags/$tag'
+  fullPaths: '/' | '/posts/$slug' | '/tags/$tag' | '/tags/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/posts/$slug' | '/tags/$tag'
-  id: '__root__' | '/' | '/posts/$slug' | '/tags/$tag'
+  to: '/' | '/posts/$slug' | '/tags/$tag' | '/tags'
+  id: '__root__' | '/' | '/posts/$slug' | '/tags/$tag' | '/tags/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PostsSlugRoute: typeof PostsSlugRoute
   TagsTagRoute: typeof TagsTagRoute
+  TagsIndexRoute: typeof TagsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -75,6 +85,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PostsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tags/': {
+      id: '/tags/'
+      path: '/tags'
+      fullPath: '/tags/'
+      preLoaderRoute: typeof TagsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tags/$tag': {
       id: '/tags/$tag'
       path: '/tags/$tag'
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PostsSlugRoute: PostsSlugRoute,
   TagsTagRoute: TagsTagRoute,
+  TagsIndexRoute: TagsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

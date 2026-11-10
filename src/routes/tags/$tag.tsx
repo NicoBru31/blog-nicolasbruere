@@ -18,7 +18,13 @@ function TagPage() {
 
   return (
     <>
-      <h1 className="mb-10 text-3xl font-bold">#{tag}</h1>
+      <h1 className="text-2xl font-medium tracking-tight text-heading">
+        <span style={{ color: `var(--tag-${tag}-ink, var(--accent))` }}>#</span>
+        {tag}
+      </h1>
+      <p className="mt-2 mb-10 font-mono text-xs text-faint">
+        // {posts.length} article{posts.length > 1 ? 's' : ''}
+      </p>
       <PostList posts={posts} />
     </>
   )

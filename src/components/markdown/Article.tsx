@@ -16,7 +16,8 @@ const components = {
 /** Renders a pre-compiled document: no parsing or highlighting happens in the browser. */
 export function Article({ document }: { document: MarkdownDocument }) {
   return (
-    <div className="markdown-renderer prose prose-zinc dark:prose-invert max-w-none">
+    // Prose colors are mapped to the theme tokens in styles.css (.markdown-renderer).
+    <div className="markdown-renderer prose max-w-none leading-[1.75] prose-headings:font-medium prose-headings:tracking-tight prose-h2:mt-12">
       <Markdown components={components}>{document}</Markdown>
     </div>
   )
