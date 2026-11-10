@@ -1,5 +1,6 @@
 import { createRootRoute, HeadContent, Link, Scripts } from '@tanstack/react-router'
 import type { ReactNode } from 'react'
+import { CurrentReading } from '#/components/CurrentReading'
 import { ThemeToggle, themeInitScript } from '#/components/ThemeToggle'
 import { SITE } from '#/lib/site'
 import appCss from '../styles.css?url'
@@ -37,7 +38,7 @@ function RootDocument({ children }: { children: ReactNode }) {
             <Link to="/" className="font-mono text-[15px] text-heading">
               ~/nicolas<span className="text-accent">.bruere</span>
             </Link>
-            <nav className="flex items-center gap-4 font-mono text-muted">
+            <nav className="flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-muted">
               <Link
                 to="/"
                 className={navLink}
@@ -46,12 +47,19 @@ function RootDocument({ children }: { children: ReactNode }) {
               >
                 /articles
               </Link>
+              <Link to="/lectures" className={navLink} activeProps={navActive}>
+                /lectures
+              </Link>
               <Link to="/tags" className={navLink} activeProps={navActive}>
                 /tags
+              </Link>
+              <Link to="/about" className={navLink} activeProps={navActive}>
+                /about
               </Link>
               <ThemeToggle />
             </nav>
           </header>
+          <CurrentReading />
           <main className="flex-1">{children}</main>
           <footer className="mt-24 flex flex-wrap justify-between gap-2 border-t border-line pt-6 font-mono text-xs text-faint">
             <span>© {new Date().getFullYear()} Nicolas Bruère</span>

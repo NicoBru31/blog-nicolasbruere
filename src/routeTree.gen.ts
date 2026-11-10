@@ -10,6 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as LecturesIndexRouteImport } from './routes/lectures/index'
+import { Route as LecturesSlugRouteImport } from './routes/lectures/$slug'
 import { Route as PostsSlugRouteImport } from './routes/posts/$slug'
 import { Route as TagsIndexRouteImport } from './routes/tags/index'
 import { Route as TagsTagRouteImport } from './routes/tags/$tag'
@@ -17,6 +20,21 @@ import { Route as TagsTagRouteImport } from './routes/tags/$tag'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LecturesIndexRoute = LecturesIndexRouteImport.update({
+  id: '/lectures/',
+  path: '/lectures/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LecturesSlugRoute = LecturesSlugRouteImport.update({
+  id: '/lectures/$slug',
+  path: '/lectures/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PostsSlugRoute = PostsSlugRouteImport.update({
@@ -37,35 +55,69 @@ const TagsTagRoute = TagsTagRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/lectures/$slug': typeof LecturesSlugRoute
   '/posts/$slug': typeof PostsSlugRoute
   '/tags/$tag': typeof TagsTagRoute
+  '/lectures/': typeof LecturesIndexRoute
   '/tags/': typeof TagsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/lectures/$slug': typeof LecturesSlugRoute
   '/posts/$slug': typeof PostsSlugRoute
   '/tags/$tag': typeof TagsTagRoute
+  '/lectures': typeof LecturesIndexRoute
   '/tags': typeof TagsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/lectures/$slug': typeof LecturesSlugRoute
   '/posts/$slug': typeof PostsSlugRoute
   '/tags/$tag': typeof TagsTagRoute
+  '/lectures/': typeof LecturesIndexRoute
   '/tags/': typeof TagsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/posts/$slug' | '/tags/$tag' | '/tags/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/lectures/$slug'
+    | '/posts/$slug'
+    | '/tags/$tag'
+    | '/lectures/'
+    | '/tags/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/posts/$slug' | '/tags/$tag' | '/tags'
-  id: '__root__' | '/' | '/posts/$slug' | '/tags/$tag' | '/tags/'
+  to:
+    | '/'
+    | '/about'
+    | '/lectures/$slug'
+    | '/posts/$slug'
+    | '/tags/$tag'
+    | '/lectures'
+    | '/tags'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/lectures/$slug'
+    | '/posts/$slug'
+    | '/tags/$tag'
+    | '/lectures/'
+    | '/tags/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  LecturesSlugRoute: typeof LecturesSlugRoute
   PostsSlugRoute: typeof PostsSlugRoute
   TagsTagRoute: typeof TagsTagRoute
+  LecturesIndexRoute: typeof LecturesIndexRoute
   TagsIndexRoute: typeof TagsIndexRoute
 }
 
@@ -76,6 +128,27 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lectures/': {
+      id: '/lectures/'
+      path: '/lectures'
+      fullPath: '/lectures/'
+      preLoaderRoute: typeof LecturesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lectures/$slug': {
+      id: '/lectures/$slug'
+      path: '/lectures/$slug'
+      fullPath: '/lectures/$slug'
+      preLoaderRoute: typeof LecturesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/posts/$slug': {
@@ -104,8 +177,11 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  LecturesSlugRoute: LecturesSlugRoute,
   PostsSlugRoute: PostsSlugRoute,
   TagsTagRoute: TagsTagRoute,
+  LecturesIndexRoute: LecturesIndexRoute,
   TagsIndexRoute: TagsIndexRoute,
 }
 export const routeTree = rootRouteImport

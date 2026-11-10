@@ -128,3 +128,8 @@ __unconfig*
 todos.json
 .content-collections
 coverage
+
+# Cloudflare local secrets (wrangler / vite preview)
+.dev.vars
+.dev.vars.*
+!.dev.vars.example

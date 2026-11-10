@@ -1,0 +1,5 @@
+# Copy to .dev.vars (git-ignored) for local dev/preview. In production: wrangler secret put.
+# Glossema Supabase, for the "en train de lire" header line. Optional: without them the header
+# falls back to the newest "en cours" fiche in content/readings.
+SUPABASE_URL=
+SUPABASE_PUBLISHABLE_KEY=

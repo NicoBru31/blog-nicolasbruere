@@ -34,4 +34,29 @@ const posts = defineCollection({
   },
 })
 
-export default defineConfig({ content: [posts] })
+const readings = defineCollection({
+  name: 'readings',
+  directory: 'content/readings',
+  include: '*/index.md',
+  schema: z.object({
+    title: z.string().max(120),
+    author: z.string().max(80),
+    /** First publication year of the work, not of the edition. */
+    year: z.number().int().optional(),
+    startedOn: z.coerce.date(),
+    /** Absent while the book is being read. */
+    finishedOn: z.coerce.date().optional(),
+    /** One-line take shown in lists. */
+    verdict: z.string().max(160).optional(),
+    draft: z.boolean().default(false),
+    content: z.string(),
+  }),
+  transform: ({ content, _meta, ...data }) => ({
+    ...data,
+    slug: _meta.directory,
+    hasNotes: content.trim().length > 0,
+    documentJson: JSON.stringify(compileMarkdown(content, highlightCode)),
+  }),
+})
+
+export default defineConfig({ content: [posts, readings] })
