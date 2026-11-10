@@ -1,3 +1,4 @@
-[env]
-# Bun canary for this personal project (stable comes from mise global)
-_.path = ["{{env.HOME}}/.bun/bin"]
+# Bun canary for this personal project (installed in ~/.bun via `bun upgrade --canary`).
+# Outside this folder, Bun stable comes from the global mise config.
+[tools]
+bun = "path:{{env.HOME}}/.bun"
