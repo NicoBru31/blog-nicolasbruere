@@ -1,0 +1,56 @@
+@import 'tailwindcss';
+@plugin "@tailwindcss/typography";
+@import './highlight.css';
+
+/* Class-based dark mode, shared with the highlight theme (.dark .markdown-renderer). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+.code-block {
+  margin: 1.5rem 0;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, currentColor 15%, transparent);
+  border-radius: 0.5rem;
+}
+
+.code-block__header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.75rem;
+  opacity: 0.75;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 15%, transparent);
+}
+
+.code-block__copy:hover {
+  text-decoration: underline;
+}
+
+.code-block pre {
+  margin: 0;
+  padding: 1rem;
+  overflow-x: auto;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* Lines are already separated by "\n" inside <pre>: a block display would double them. */
+.code-block .th-line--highlighted {
+  display: inline-block;
+  min-width: calc(100% + 2rem);
+  margin: 0 -1rem;
+  padding: 0 1rem;
+  background: color-mix(in srgb, currentColor 10%, transparent);
+}
+
+.markdown-alert {
+  margin: 1.5rem 0;
+  padding: 0.75rem 1rem;
+  border-left: 4px solid color-mix(in srgb, currentColor 40%, transparent);
+  border-radius: 0.25rem;
+  background: color-mix(in srgb, currentColor 5%, transparent);
+}
+
+.markdown-alert-title {
+  margin: 0 !important;
+  font-weight: 600;
+}

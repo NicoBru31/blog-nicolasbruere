@@ -1,0 +1,48 @@
+{
+  "name": "blog-nicolasbruere",
+  "private": true,
+  "type": "module",
+  "imports": {
+    "#/*": "./src/*"
+  },
+  "scripts": {
+    "dev": "vite dev --port 3000",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "bun run build && wrangler deploy",
+    "gen:highlight-css": "bun scripts/highlight-css.ts",
+    "lint": "bun lint --no-script --max-warnings 0",
+    "lint:fix": "bun lint --no-script --fix",
+    "format": "bun fmt --no-script",
+    "format:check": "bun fmt --check --no-script",
+    "check": "bun check --no-script",
+    "test": "bun test",
+    "verify": "bun run format:check && bun run lint && bun run check && bun test && bun run build"
+  },
+  "dependencies": {
+    "@content-collections/core": "^0.15.3",
+    "@content-collections/vite": "^0.3.1",
+    "@tailwindcss/typography": "^0.5.20",
+    "@tailwindcss/vite": "^4.1.18",
+    "@tanstack/highlight": "^1.2.11",
+    "@tanstack/markdown": "^1.2.0",
+    "@tanstack/react-router": "1.170.46",
+    "@tanstack/react-start": "1.169.5",
+    "@tanstack/redact": "^0.3.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tailwindcss": "^4.1.18",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.26.0",
+    "@types/bun": "^1.4.4",
+    "@types/node": "^22.10.2",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^6.0.1",
+    "typescript": "^6.0.2",
+    "vite": "^8.0.0",
+    "wrangler": "^4.70.0"
+  }
+}

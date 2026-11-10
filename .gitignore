@@ -111,3 +111,20 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Project (TanStack Start / Cloudflare / content-collections)
+node_modules
+.DS_Store
+dist
+dist-ssr
+*.local
+.env
+.nitro
+.tanstack
+.wrangler
+.output
+.vinxi
+__unconfig*
+todos.json
+.content-collections
+coverage

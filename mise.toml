@@ -1,0 +1,3 @@
+[env]
+# Bun canary for this personal project (stable comes from mise global)
+_.path = ["{{env.HOME}}/.bun/bin"]
