@@ -6,7 +6,7 @@ import { ThemeToggle, themeInitScript } from '#/components/ThemeToggle'
 import { LINKS } from '#/lib/about'
 import { rssPath } from '#/lib/feeds'
 import { LOCALES, localizedPath, useI18n } from '#/lib/i18n'
-import { OG_LOCALES } from '#/lib/seo'
+import { OG_LOCALES, ogImageMeta } from '#/lib/seo'
 import { absoluteUrl, SITE } from '#/lib/site'
 import appCss from '../styles.css?url'
 
@@ -20,6 +20,8 @@ export const Route = createRootRoute({
       { name: 'theme-color', content: '#1b1916', media: '(prefers-color-scheme: dark)' },
       // Overridden with `article` by post pages.
       { property: 'og:type', content: 'website' },
+      // Overridden with the post's own image by post pages.
+      ...ogImageMeta(SITE.ogImage.path, SITE.title),
     ],
     links: [
       { rel: 'stylesheet', href: appCss },
@@ -76,10 +78,6 @@ function RootDocument({ children }: { children: ReactNode }) {
         {LOCALES.filter((alt) => alt !== locale).map((alt) => (
           <meta key={alt} property="og:locale:alternate" content={OG_LOCALES[alt]} />
         ))}
-        <meta property="og:image" content={absoluteUrl(SITE.ogImage.path)} />
-        <meta property="og:image:width" content={String(SITE.ogImage.width)} />
-        <meta property="og:image:height" content={String(SITE.ogImage.height)} />
-        <meta property="og:image:alt" content={SITE.title} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content={X_HANDLE} />
         <HeadContent />

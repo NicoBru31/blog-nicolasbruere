@@ -64,6 +64,17 @@ export type PostSeo = {
 
 export const postPath = (slug: string, locale: Locale) => localizedPath(`/posts/${slug}`, locale)
 
+/** Share image generated per post and locale by scripts/og.ts. */
+export const postOgImagePath = (slug: string, locale: Locale) => `/posts/${slug}/og-${locale}.png`
+
+/** og:image tags for one 1200×630 image. Route-level entries override the root's default. */
+export const ogImageMeta = (path: string, alt: string) => [
+  { property: 'og:image', content: absoluteUrl(path) },
+  { property: 'og:image:width', content: String(SITE.ogImage.width) },
+  { property: 'og:image:height', content: String(SITE.ogImage.height) },
+  { property: 'og:image:alt', content: alt },
+]
+
 export function blogPostingLd(post: PostSeo, locale: Locale) {
   const url = absoluteUrl(postPath(post.slug, locale))
   return {
@@ -79,7 +90,7 @@ export function blogPostingLd(post: PostSeo, locale: Locale) {
     inLanguage: locale,
     keywords: post.tags.join(', '),
     timeRequired: `PT${post.readingTime}M`,
-    image: absoluteUrl(SITE.ogImage.path),
+    image: absoluteUrl(postOgImagePath(post.slug, locale)),
     author: personLd(),
     publisher: { '@id': PERSON_ID },
     isPartOf: { '@type': 'Blog', '@id': WEBSITE_ID, name: SITE.title },

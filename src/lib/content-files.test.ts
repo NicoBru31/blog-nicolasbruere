@@ -2,10 +2,14 @@
 // languages must agree (dates, tags, draft state…). Runs in `bun test`, so a missing translation
 // fails CI before it reaches the site.
 import { describe, expect, test } from 'bun:test'
-import { readdirSync, readFileSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
+import { LOCALES } from './i18n'
+import { slugFromDirectory } from './posts'
+import { postOgImagePath } from './seo'
 
 const CONTENT = join(import.meta.dir, '../../content')
+const PUBLIC = join(import.meta.dir, '../../public')
 
 const collections = {
   posts: ['pubDate', 'updatedDate', 'tags', 'draft'],
@@ -34,6 +38,15 @@ for (const [collection, sharedKeys] of Object.entries(collections)) {
           expect({ key, value: fr[key] }).toEqual({ key, value: en[key] })
         }
       })
+
+      if (collection === 'posts') {
+        test(`${name} has its share images (bun run gen:og)`, () => {
+          for (const locale of LOCALES) {
+            const path = postOgImagePath(slugFromDirectory(name), locale)
+            expect({ path, exists: existsSync(join(PUBLIC, path)) }).toEqual({ path, exists: true })
+          }
+        })
+      }
     }
   })
 }

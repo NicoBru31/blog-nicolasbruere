@@ -4,7 +4,7 @@ import { isoDay } from '#/components/PostList'
 import { Tag } from '#/components/Tag'
 import { getPost } from '#/lib/content'
 import { localizedPath, toLocale, useI18n } from '#/lib/i18n'
-import { blogPostingLd, ldScript } from '#/lib/seo'
+import { blogPostingLd, ldScript, ogImageMeta, postOgImagePath } from '#/lib/seo'
 import { absoluteUrl, SITE } from '#/lib/site'
 
 export const Route = createFileRoute('/{-$locale}/posts/$slug')({
@@ -29,6 +29,7 @@ export const Route = createFileRoute('/{-$locale}/posts/$slug')({
               content: absoluteUrl(localizedPath('/about', toLocale(params.locale))),
             },
             ...post.tags.map((tag) => ({ property: 'article:tag', content: tag })),
+            ...ogImageMeta(postOgImagePath(post.slug, toLocale(params.locale)), post.title),
             { name: 'twitter:title', content: post.title },
             { name: 'twitter:description', content: post.description },
           ],
