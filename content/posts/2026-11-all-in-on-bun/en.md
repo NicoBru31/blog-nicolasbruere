@@ -3,7 +3,6 @@ title: What's your excuse for not using Bun?
 description: Node-compatible, fast, and one tool instead of five. And why Deno, which had almost everything, never got the same traction.
 pubDate: 2026-11-12
 tags: [tooling]
-draft: true
 ---
 
 I keep hearing the same three excuses, and I've had them myself: "it'll break everything", "a few seconds saved, who cares", "yet another tool". All three fall apart, and each one matches one of Bun's strengths.
@@ -117,7 +116,7 @@ One trap to know about: `bun lint`, `bun fmt` and `bun check` first run the scri
 }
 ```
 
-On the testing side, `bun test` aims for Jest compatibility, and a file that imports from `vitest` gets its functions from Bun. The docs admit not everything is implemented yet: for a large Vitest suite, run both side by side before switching. **[TODO: your experience with a real Vitest suite]**
+On the testing side, `bun test` aims for Jest compatibility, and a file that imports from `vitest` gets its functions from Bun. The docs admit not everything is implemented yet: for a large Vitest suite, run both side by side before switching.
 
 ## So why didn't Deno take off?
 

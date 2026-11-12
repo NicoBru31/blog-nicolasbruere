@@ -3,7 +3,6 @@ title: Quelle est votre excuse pour ne pas utiliser Bun ?
 description: Compatible Node, rapide, et un seul outil à la place de cinq. Et pourquoi Deno, qui avait presque tout, n'a pas eu le même succès.
 pubDate: 2026-11-12
 tags: [tooling]
-draft: true
 ---
 
 J'entends toujours les trois mêmes excuses, et je les ai eues moi-même : « ça va tout casser », « quelques secondes de gagnées, on s'en fiche », « encore un outil de plus ». Elles tombent toutes les trois, et chacune correspond à un point fort de Bun.
@@ -117,7 +116,7 @@ Un piège à connaître : `bun lint`, `bun fmt` et `bun check` lancent d'abord l
 }
 ```
 
-Côté tests, `bun test` vise la compatibilité avec Jest, et un fichier qui importe depuis `vitest` récupère ses fonctions depuis Bun. La doc reconnaît que tout n'est pas encore implémenté : pour une grosse suite Vitest, faites-la tourner en parallèle avant de basculer. **[TODO : ton retour sur une vraie suite Vitest]**
+Côté tests, `bun test` vise la compatibilité avec Jest, et un fichier qui importe depuis `vitest` récupère ses fonctions depuis Bun. La doc reconnaît que tout n'est pas encore implémenté : pour une grosse suite Vitest, faites-la tourner en parallèle avant de basculer.
 
 ## Alors pourquoi Deno n'a pas eu ce succès ?
 
