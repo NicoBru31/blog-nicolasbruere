@@ -9,15 +9,34 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
+import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as Char123LocaleChar125RouteRouteImport } from './routes/{-$locale}/route'
 import { Route as Char123LocaleChar125IndexRouteImport } from './routes/{-$locale}/index'
 import { Route as Char123LocaleChar125AboutRouteImport } from './routes/{-$locale}/about'
+import { Route as Char123LocaleChar125RssDotxmlRouteImport } from './routes/{-$locale}/rss[.]xml'
 import { Route as Char123LocaleChar125PostsSlugRouteImport } from './routes/{-$locale}/posts/$slug'
 import { Route as Char123LocaleChar125ReadingsIndexRouteImport } from './routes/{-$locale}/readings/index'
 import { Route as Char123LocaleChar125ReadingsSlugRouteImport } from './routes/{-$locale}/readings/$slug'
 import { Route as Char123LocaleChar125TagsIndexRouteImport } from './routes/{-$locale}/tags/index'
 import { Route as Char123LocaleChar125TagsTagRouteImport } from './routes/{-$locale}/tags/$tag'
 
+const LlmsDottxtRoute = LlmsDottxtRouteImport.update({
+  id: '/llms.txt',
+  path: '/llms.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
+  id: '/robots.txt',
+  path: '/robots.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const Char123LocaleChar125RouteRoute =
   Char123LocaleChar125RouteRouteImport.update({
     id: '/{-$locale}',
@@ -34,6 +53,12 @@ const Char123LocaleChar125AboutRoute =
   Char123LocaleChar125AboutRouteImport.update({
     id: '/about',
     path: '/about',
+    getParentRoute: () => Char123LocaleChar125RouteRoute,
+  } as any)
+const Char123LocaleChar125RssDotxmlRoute =
+  Char123LocaleChar125RssDotxmlRouteImport.update({
+    id: '/rss.xml',
+    path: '/rss.xml',
     getParentRoute: () => Char123LocaleChar125RouteRoute,
   } as any)
 const Char123LocaleChar125PostsSlugRoute =
@@ -69,7 +94,11 @@ const Char123LocaleChar125TagsTagRoute =
 
 export interface FileRoutesByFullPath {
   '/{-$locale}': typeof Char123LocaleChar125RouteRouteWithChildren
+  '/llms.txt': typeof LlmsDottxtRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/{-$locale}/about': typeof Char123LocaleChar125AboutRoute
+  '/{-$locale}/rss.xml': typeof Char123LocaleChar125RssDotxmlRoute
   '/{-$locale}/': typeof Char123LocaleChar125IndexRoute
   '/{-$locale}/posts/$slug': typeof Char123LocaleChar125PostsSlugRoute
   '/{-$locale}/readings/$slug': typeof Char123LocaleChar125ReadingsSlugRoute
@@ -78,7 +107,11 @@ export interface FileRoutesByFullPath {
   '/{-$locale}/tags/': typeof Char123LocaleChar125TagsIndexRoute
 }
 export interface FileRoutesByTo {
+  '/llms.txt': typeof LlmsDottxtRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/{-$locale}/about': typeof Char123LocaleChar125AboutRoute
+  '/{-$locale}/rss.xml': typeof Char123LocaleChar125RssDotxmlRoute
   '/{-$locale}': typeof Char123LocaleChar125IndexRoute
   '/{-$locale}/posts/$slug': typeof Char123LocaleChar125PostsSlugRoute
   '/{-$locale}/readings/$slug': typeof Char123LocaleChar125ReadingsSlugRoute
@@ -89,7 +122,11 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/{-$locale}': typeof Char123LocaleChar125RouteRouteWithChildren
+  '/llms.txt': typeof LlmsDottxtRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/{-$locale}/about': typeof Char123LocaleChar125AboutRoute
+  '/{-$locale}/rss.xml': typeof Char123LocaleChar125RssDotxmlRoute
   '/{-$locale}/': typeof Char123LocaleChar125IndexRoute
   '/{-$locale}/posts/$slug': typeof Char123LocaleChar125PostsSlugRoute
   '/{-$locale}/readings/$slug': typeof Char123LocaleChar125ReadingsSlugRoute
@@ -101,7 +138,11 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/{-$locale}'
+    | '/llms.txt'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/{-$locale}/about'
+    | '/{-$locale}/rss.xml'
     | '/{-$locale}/'
     | '/{-$locale}/posts/$slug'
     | '/{-$locale}/readings/$slug'
@@ -110,7 +151,11 @@ export interface FileRouteTypes {
     | '/{-$locale}/tags/'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/llms.txt'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/{-$locale}/about'
+    | '/{-$locale}/rss.xml'
     | '/{-$locale}'
     | '/{-$locale}/posts/$slug'
     | '/{-$locale}/readings/$slug'
@@ -120,7 +165,11 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/{-$locale}'
+    | '/llms.txt'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/{-$locale}/about'
+    | '/{-$locale}/rss.xml'
     | '/{-$locale}/'
     | '/{-$locale}/posts/$slug'
     | '/{-$locale}/readings/$slug'
@@ -131,10 +180,34 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   Char123LocaleChar125RouteRoute: typeof Char123LocaleChar125RouteRouteWithChildren
+  LlmsDottxtRoute: typeof LlmsDottxtRoute
+  RobotsDottxtRoute: typeof RobotsDottxtRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/llms.txt': {
+      id: '/llms.txt'
+      path: '/llms.txt'
+      fullPath: '/llms.txt'
+      preLoaderRoute: typeof LlmsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/robots.txt': {
+      id: '/robots.txt'
+      path: '/robots.txt'
+      fullPath: '/robots.txt'
+      preLoaderRoute: typeof RobotsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/{-$locale}': {
       id: '/{-$locale}'
       path: '/{-$locale}'
@@ -154,6 +227,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/{-$locale}/about'
       preLoaderRoute: typeof Char123LocaleChar125AboutRouteImport
+      parentRoute: typeof Char123LocaleChar125RouteRoute
+    }
+    '/{-$locale}/rss.xml': {
+      id: '/{-$locale}/rss.xml'
+      path: '/rss.xml'
+      fullPath: '/{-$locale}/rss.xml'
+      preLoaderRoute: typeof Char123LocaleChar125RssDotxmlRouteImport
       parentRoute: typeof Char123LocaleChar125RouteRoute
     }
     '/{-$locale}/posts/$slug': {
@@ -196,6 +276,7 @@ declare module '@tanstack/react-router' {
 
 interface Char123LocaleChar125RouteRouteChildren {
   Char123LocaleChar125AboutRoute: typeof Char123LocaleChar125AboutRoute
+  Char123LocaleChar125RssDotxmlRoute: typeof Char123LocaleChar125RssDotxmlRoute
   Char123LocaleChar125IndexRoute: typeof Char123LocaleChar125IndexRoute
   Char123LocaleChar125PostsSlugRoute: typeof Char123LocaleChar125PostsSlugRoute
   Char123LocaleChar125ReadingsSlugRoute: typeof Char123LocaleChar125ReadingsSlugRoute
@@ -207,6 +288,7 @@ interface Char123LocaleChar125RouteRouteChildren {
 const Char123LocaleChar125RouteRouteChildren: Char123LocaleChar125RouteRouteChildren =
   {
     Char123LocaleChar125AboutRoute: Char123LocaleChar125AboutRoute,
+    Char123LocaleChar125RssDotxmlRoute: Char123LocaleChar125RssDotxmlRoute,
     Char123LocaleChar125IndexRoute: Char123LocaleChar125IndexRoute,
     Char123LocaleChar125PostsSlugRoute: Char123LocaleChar125PostsSlugRoute,
     Char123LocaleChar125ReadingsSlugRoute:
@@ -224,6 +306,9 @@ const Char123LocaleChar125RouteRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   Char123LocaleChar125RouteRoute: Char123LocaleChar125RouteRouteWithChildren,
+  LlmsDottxtRoute: LlmsDottxtRoute,
+  RobotsDottxtRoute: RobotsDottxtRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

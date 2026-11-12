@@ -3,23 +3,38 @@ import { Article } from '#/components/markdown/Article'
 import { isoDay } from '#/components/PostList'
 import { Tag } from '#/components/Tag'
 import { getPost } from '#/lib/content'
-import { useI18n } from '#/lib/i18n'
-import { SITE } from '#/lib/site'
+import { localizedPath, toLocale, useI18n } from '#/lib/i18n'
+import { blogPostingLd, ldScript } from '#/lib/seo'
+import { absoluteUrl, SITE } from '#/lib/site'
 
 export const Route = createFileRoute('/{-$locale}/posts/$slug')({
   loader: ({ params }) => getPost({ data: { slug: params.slug, locale: params.locale } }),
-  head: ({ loaderData: post }) => ({
-    meta: post
-      ? [
-          { title: `${post.title} — ${SITE.title}` },
-          { name: 'description', content: post.description },
-          { property: 'og:type', content: 'article' },
-          { property: 'og:title', content: post.title },
-          { property: 'og:description', content: post.description },
-          { property: 'article:published_time', content: isoDay(post.pubDate) },
-        ]
-      : [],
-  }),
+  head: ({ loaderData: post, params }) =>
+    post
+      ? {
+          meta: [
+            { title: `${post.title} — ${SITE.title}` },
+            { name: 'description', content: post.description },
+            { name: 'author', content: SITE.author.name },
+            { property: 'og:type', content: 'article' },
+            { property: 'og:title', content: post.title },
+            { property: 'og:description', content: post.description },
+            { property: 'article:published_time', content: isoDay(post.pubDate) },
+            {
+              property: 'article:modified_time',
+              content: isoDay(post.updatedDate ?? post.pubDate),
+            },
+            {
+              property: 'article:author',
+              content: absoluteUrl(localizedPath('/about', toLocale(params.locale))),
+            },
+            ...post.tags.map((tag) => ({ property: 'article:tag', content: tag })),
+            { name: 'twitter:title', content: post.title },
+            { name: 'twitter:description', content: post.description },
+          ],
+          scripts: [ldScript(blogPostingLd(post, toLocale(params.locale)))],
+        }
+      : {},
   component: PostPage,
 })
 

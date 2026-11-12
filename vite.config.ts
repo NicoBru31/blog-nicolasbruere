@@ -16,6 +16,10 @@ export default defineConfig({
     tailwindcss(),
     tanstackStart({
       prerender: { enabled: true, crawlLinks: true, failOnError: true },
+      // Not linked from any page, so the crawler can't find them: listed explicitly.
+      pages: ['/sitemap.xml', '/robots.txt', '/llms.txt', '/rss.xml', '/fr/rss.xml'].map(
+        (path) => ({ path }),
+      ),
     }),
     viteReact({ compiler: true }),
     redact(),

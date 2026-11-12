@@ -3,8 +3,11 @@ import type { ReactNode } from 'react'
 import { CurrentReading } from '#/components/CurrentReading'
 import { LanguageSwitch } from '#/components/LanguageSwitch'
 import { ThemeToggle, themeInitScript } from '#/components/ThemeToggle'
+import { LINKS } from '#/lib/about'
+import { rssPath } from '#/lib/feeds'
 import { LOCALES, localizedPath, useI18n } from '#/lib/i18n'
-import { SITE } from '#/lib/site'
+import { OG_LOCALES } from '#/lib/seo'
+import { absoluteUrl, SITE } from '#/lib/site'
 import appCss from '../styles.css?url'
 
 export const Route = createRootRoute({
@@ -15,6 +18,8 @@ export const Route = createRootRoute({
       { title: SITE.title },
       { name: 'theme-color', content: '#faf8f3', media: '(prefers-color-scheme: light)' },
       { name: 'theme-color', content: '#1b1916', media: '(prefers-color-scheme: dark)' },
+      // Overridden with `article` by post pages.
+      { property: 'og:type', content: 'website' },
     ],
     links: [
       { rel: 'stylesheet', href: appCss },
@@ -29,31 +34,54 @@ export const Route = createRootRoute({
   notFoundComponent: NotFound,
 })
 
+const X_HANDLE = LINKS.find((link) => link.label === 'x')?.handle ?? ''
+
 const navLink = 'transition-colors hover:text-accent'
 const navActive = { className: 'text-ink' }
 
 function RootDocument({ children }: { children: ReactNode }) {
-  const { t, param } = useI18n()
+  const { locale, t, param } = useI18n()
   const { pathname } = useLocation()
+  const canonical = absoluteUrl(pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname)
 
   return (
     <html lang={t.htmlLang} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         {/* The same page in each language, for search engines. */}
-        {LOCALES.map((locale) => (
+        {LOCALES.map((alt) => (
           <link
-            key={locale}
+            key={alt}
             rel="alternate"
-            hrefLang={locale}
-            href={`${SITE.url}${localizedPath(pathname, locale)}`}
+            hrefLang={alt}
+            href={absoluteUrl(localizedPath(pathname, alt))}
           />
         ))}
         <link
           rel="alternate"
           hrefLang="x-default"
-          href={`${SITE.url}${localizedPath(pathname, 'en')}`}
+          href={absoluteUrl(localizedPath(pathname, 'en'))}
         />
+        {/* Prerendered URLs have no trailing slash: `/posts/x/` redirects to `/posts/x`. */}
+        <link rel="canonical" href={canonical} />
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title={SITE.title}
+          href={absoluteUrl(rssPath(locale))}
+        />
+        <meta property="og:url" content={canonical} />
+        <meta property="og:site_name" content={SITE.title} />
+        <meta property="og:locale" content={OG_LOCALES[locale]} />
+        {LOCALES.filter((alt) => alt !== locale).map((alt) => (
+          <meta key={alt} property="og:locale:alternate" content={OG_LOCALES[alt]} />
+        ))}
+        <meta property="og:image" content={absoluteUrl(SITE.ogImage.path)} />
+        <meta property="og:image:width" content={String(SITE.ogImage.width)} />
+        <meta property="og:image:height" content={String(SITE.ogImage.height)} />
+        <meta property="og:image:alt" content={SITE.title} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content={X_HANDLE} />
         <HeadContent />
       </head>
       <body className="bg-paper font-sans text-ink antialiased">

@@ -2,12 +2,23 @@ import { createFileRoute } from '@tanstack/react-router'
 import { isoDay, PostList } from '#/components/PostList'
 import { listPosts } from '#/lib/content'
 import { MESSAGES, toLocale, useI18n } from '#/lib/i18n'
+import { ldScript, websiteLd } from '#/lib/seo'
+import { SITE } from '#/lib/site'
 
 export const Route = createFileRoute('/{-$locale}/')({
   loader: ({ params }) => listPosts({ data: params.locale }),
-  head: ({ params }) => ({
-    meta: [{ name: 'description', content: MESSAGES[toLocale(params.locale)].siteDescription }],
-  }),
+  head: ({ params }) => {
+    const locale = toLocale(params.locale)
+    const t = MESSAGES[locale]
+    return {
+      meta: [
+        { name: 'description', content: t.siteDescription },
+        { property: 'og:title', content: `${SITE.title} — ${t.home.title}` },
+        { property: 'og:description', content: t.siteDescription },
+      ],
+      scripts: [ldScript(websiteLd(locale, t.siteDescription))],
+    }
+  },
   component: Home,
 })
 

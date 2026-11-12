@@ -20,7 +20,8 @@
     "check": "bun check --no-script",
     "test": "bun test",
     "verify": "bun run gen:content && bun run format:check && bun run lint && bun run check && bun run knip && bun test && bun run build",
-    "knip": "knip"
+    "knip": "knip",
+    "gen:og": "bun scripts/og.ts"
   },
   "dependencies": {
     "@content-collections/core": "^0.15.3",

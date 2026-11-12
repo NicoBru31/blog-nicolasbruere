@@ -3,16 +3,22 @@ import type { ReactNode } from 'react'
 import { GitGraph } from '#/components/GitGraph'
 import { careerIn, LINKS } from '#/lib/about'
 import { MESSAGES, toLocale, useI18n } from '#/lib/i18n'
+import { ldScript, profilePageLd } from '#/lib/seo'
 import { SITE } from '#/lib/site'
 
 export const Route = createFileRoute('/{-$locale}/about')({
   head: ({ params }) => {
-    const t = MESSAGES[toLocale(params.locale)]
+    const locale = toLocale(params.locale)
+    const t = MESSAGES[locale]
     return {
       meta: [
         { title: `${t.about.title} — ${SITE.title}` },
         { name: 'description', content: t.about.metaDescription },
+        { property: 'og:type', content: 'profile' },
+        { property: 'og:title', content: `${t.about.title} — ${SITE.title}` },
+        { property: 'og:description', content: t.about.metaDescription },
       ],
+      scripts: [ldScript(profilePageLd(locale))],
     }
   },
   component: AboutPage,
