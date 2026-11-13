@@ -6,4 +6,7 @@
   "main": "@tanstack/react-start/server-entry",
   // Must match SITE.url (src/lib/site.ts). Cloudflare creates the DNS record and the certificate.
   "routes": [{ "pattern": "bruerenicolas.me", "custom_domain": true }],
+  // Prerendered pages are `posts/x/index.html`: serve them at `/posts/x` (the canonical URL) and
+  // redirect `/posts/x/` there, instead of Cloudflare's default of adding the slash.
+  "assets": { "html_handling": "drop-trailing-slash" },
 }
