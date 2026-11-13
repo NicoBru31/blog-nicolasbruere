@@ -4,6 +4,7 @@ import { isoDay } from '#/components/PostList'
 import { getReading } from '#/lib/content'
 import { useI18n } from '#/lib/i18n'
 import { SITE } from '#/lib/site'
+import { titleTransition } from '#/lib/transitions'
 
 export const Route = createFileRoute('/{-$locale}/readings/$slug')({
   loader: ({ params }) => getReading({ data: { slug: params.slug, locale: params.locale } }),
@@ -32,7 +33,10 @@ function ReadingPage() {
         {t.readings.back}
       </Link>
       <header className="mt-6 mb-10 border-b border-line pb-8">
-        <h1 className="text-3xl leading-tight font-medium tracking-tight text-heading sm:text-4xl">
+        <h1
+          className="w-fit text-3xl leading-tight font-medium tracking-tight text-heading sm:text-4xl"
+          style={titleTransition('reading', reading.slug)}
+        >
           {reading.title}
         </h1>
         <p className="mt-2 text-lg text-muted">

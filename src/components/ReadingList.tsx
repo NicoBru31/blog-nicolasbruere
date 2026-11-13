@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { useI18n } from '#/lib/i18n'
+import { titleTransition } from '#/lib/transitions'
 import { isoDay } from './PostList'
 
 type ReadingSummary = {
@@ -25,7 +26,9 @@ export function ReadingList({ readings }: { readings: ReadingSummary[] }) {
                 <Link
                   to="/{-$locale}/readings/$slug"
                   params={{ locale: param, slug: reading.slug }}
-                  className="font-medium hover:text-accent"
+                  // inline-block: a view transition can't snapshot an inline box split over lines.
+                  className="inline-block font-medium hover:text-accent"
+                  style={titleTransition('reading', reading.slug)}
                 >
                   {reading.title}
                 </Link>

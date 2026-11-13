@@ -85,7 +85,7 @@ function RootDocument({ children }: { children: ReactNode }) {
       <body className="bg-paper font-sans text-ink antialiased">
         {/* Full-height column: <main> grows so the footer sits at the bottom on short pages. */}
         <div className="mx-auto flex min-h-dvh max-w-3xl flex-col px-5 py-8 sm:py-10">
-          <header className="mb-14 flex flex-wrap items-center justify-between gap-3 text-sm">
+          <header className="vt-header mb-14 flex flex-wrap items-center justify-between gap-3 text-sm">
             <Link
               to="/{-$locale}"
               params={{ locale: param }}

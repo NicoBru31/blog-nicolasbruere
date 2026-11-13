@@ -6,6 +6,7 @@ import { getPost } from '#/lib/content'
 import { localizedPath, toLocale, useI18n } from '#/lib/i18n'
 import { blogPostingLd, ldScript, ogImageMeta, postOgImagePath } from '#/lib/seo'
 import { absoluteUrl, SITE } from '#/lib/site'
+import { titleTransition } from '#/lib/transitions'
 
 export const Route = createFileRoute('/{-$locale}/posts/$slug')({
   loader: ({ params }) => getPost({ data: { slug: params.slug, locale: params.locale } }),
@@ -58,7 +59,10 @@ function PostPage() {
             <Tag key={tag} name={tag} />
           ))}
         </div>
-        <h1 className="text-3xl leading-tight font-medium tracking-tight text-heading sm:text-4xl">
+        <h1
+          className="w-fit text-3xl leading-tight font-medium tracking-tight text-heading sm:text-4xl"
+          style={titleTransition('post', post.slug)}
+        >
           {post.title}
         </h1>
         <p className="mt-3 text-lg leading-relaxed text-muted">{post.description}</p>

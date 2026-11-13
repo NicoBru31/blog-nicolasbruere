@@ -7,6 +7,10 @@ export function getRouter() {
     scrollRestoration: true,
     defaultPreload: 'intent',
     defaultPreloadStaleTime: 0,
+    // Client navigations run inside document.startViewTransition: a cross-fade, plus the title
+    // morph between lists and pages (see titleTransition and the CSS in styles.css). Browsers
+    // without the API just swap pages.
+    defaultViewTransition: true,
   })
 
   return router

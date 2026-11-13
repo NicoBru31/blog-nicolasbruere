@@ -213,3 +213,29 @@ html {
 .markdown-alert-content > :last-child {
   margin-bottom: 0;
 }
+
+/* ── Page transitions (View Transitions API, enabled in src/router.tsx) ───────── */
+/* The header is its own group: identical on every page, it stays still while the rest (root)
+   cross-fades. Not the footer: its position depends on the page height, so it would slide.
+   Titles morph via titleTransition (src/lib/transitions.ts). */
+.vt-header {
+  view-transition-name: site-header;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 180ms;
+}
+
+::view-transition-group(*) {
+  animation-duration: 300ms;
+  animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

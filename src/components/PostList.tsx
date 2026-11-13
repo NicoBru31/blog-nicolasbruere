@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { useI18n } from '#/lib/i18n'
+import { titleTransition } from '#/lib/transitions'
 import { Tag } from './Tag'
 
 type PostSummary = {
@@ -33,7 +34,10 @@ export function PostList({ posts }: { posts: PostSummary[] }) {
               <Tag key={tag} name={tag} />
             ))}
           </div>
-          <h2 className="text-base leading-snug font-medium text-heading">
+          <h2
+            className="w-fit text-base leading-snug font-medium text-heading"
+            style={titleTransition('post', post.slug)}
+          >
             {/* Stretched link: the whole card is clickable, tags stay separate links. */}
             <Link
               to="/{-$locale}/posts/$slug"
