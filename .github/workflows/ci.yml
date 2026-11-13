@@ -7,7 +7,8 @@ on:
 
 concurrency:
   group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  # A newer PR push cancels the stale run; on main, deploys queue instead of being cut mid-upload.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   verify:
@@ -36,3 +37,12 @@ jobs:
           name: site
           path: dist/client
           retention-days: 7
+
+      # Pushes to main publish the build checked above. Runtime secrets (SUPABASE_*) live on the
+      # Worker (`wrangler secret put`) and survive deploys.
+      - name: Deploy to Cloudflare
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: bunx wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
