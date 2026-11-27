@@ -50,6 +50,7 @@ function ico(images: { size: number; data: Buffer }[]): Buffer {
 const rounded = svg({ rounded: true })
 await Bun.write(out('favicon.svg'), rounded)
 await Bun.write(out('apple-touch-icon.png'), await png(svg({ rounded: false }), 180))
+await Bun.write(out('icon-192.png'), await png(rounded, 192))
 await Bun.write(out('icon-512.png'), await png(rounded, 512))
 await Bun.write(
   out('favicon.ico'),
@@ -57,4 +58,6 @@ await Bun.write(
     await Promise.all([16, 32, 48].map(async (size) => ({ size, data: await png(rounded, size) }))),
   ),
 )
-console.log('wrote public/favicon.svg, favicon.ico, apple-touch-icon.png, icon-512.png')
+console.log(
+  'wrote public/favicon.svg, favicon.ico, apple-touch-icon.png, icon-192.png, icon-512.png',
+)
